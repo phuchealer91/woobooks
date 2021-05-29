@@ -67,7 +67,7 @@ const UserLogined = (props) => {
   // }, [notificationsCount])
 
   useEffect(() => {
-    const socket = OpenSocket('https://mbooks-app.herokuapp.com')
+    const socket = OpenSocket('http://localhost:8000')
     socket.on('create order', (orderUser) => {
       openNotification('create order', orderUser)
       dispatch(

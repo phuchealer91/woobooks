@@ -20,11 +20,14 @@ function StatisticalOrder(props) {
   const [startDate, setStartDate] = useState('')
   const [endDate, setEndDate] = useState('')
   const [orderFiters, setOrderFilters] = useState([])
-
   useEffect(() => {
     StatisticalOrders({ value: 'day7Ago' }).then((res) => {
       if (res.data) {
-        setOrderFilters(res.data.orderFilters)
+        const xxx = res.data.orderFilters.map((item) => {
+          let x = item.total * 100
+          return { ...item, total: x }
+        })
+        setOrderFilters(xxx)
       }
     })
   }, [])
@@ -35,7 +38,11 @@ function StatisticalOrder(props) {
     } else {
       StatisticalOrderFilters({ startDate, endDate }).then((res) => {
         if (res.data) {
-          setOrderFilters(res.data.orderFilters)
+          const xxx = res.data.orderFilters.map((item) => {
+            let x = item.total * 100
+            return { ...item, total: x }
+          })
+          setOrderFilters(xxx)
         }
       })
     }
@@ -49,7 +56,11 @@ function StatisticalOrder(props) {
   function handleChange(value) {
     StatisticalOrders({ value }).then((res) => {
       if (res.data) {
-        setOrderFilters(res.data.orderFilters)
+        const xxx = res.data.orderFilters.map((item) => {
+          let x = item.total * 100
+          return { ...item, total: x }
+        })
+        setOrderFilters(xxx)
       }
     })
   }

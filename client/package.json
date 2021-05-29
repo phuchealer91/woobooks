@@ -1,7 +1,7 @@
 {
   "name": "client",
   "version": "0.1.0",
-  "proxy": "https://mbooks-app.herokuapp.com",
+  "proxy": "http://localhost:8000",
   "private": true,
   "dependencies": {
     "@ant-design/icons": "^4.2.2",
@@ -49,7 +49,7 @@
     "yup": "^0.29.3"
   },
   "scripts": {
-    "start": "npm run watch:css && react-scripts start",
+    "start": "yarn watch:css && react-scripts start",
     "build": "react-scripts build",
     "build:css": "postcss src/assets/styles/tailwind.css -o src/assets/styles/main.css",
     "watch:css": "postcss src/assets/styles/tailwind.css -o src/assets/styles/main.css",

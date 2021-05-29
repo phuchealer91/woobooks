@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { TOKEN } from '../redux/constants/keys'
-const baseURL = 'https://mbooks-app.herokuapp.com/api'
+const baseURL = 'http://localhost:8000/api'
 
 class AxiosServices {
   constructor() {
@@ -11,10 +11,10 @@ class AxiosServices {
       const token = window.localStorage.getItem(TOKEN)
       if (token) {
         config.headers.authorization = token
-        console.log(
-          'config.headers.authorization',
-          config.headers.authorization
-        )
+        // console.log(
+        //   'config.headers.authorization',
+        //   config.headers.authorization
+        // )
       }
       return config
     }, this.handleFail)
@@ -23,7 +23,7 @@ class AxiosServices {
   }
 
   handleSuccess = (response) => {
-    console.log('respon', response)
+    // console.log('respon', response)
 
     return response
   }

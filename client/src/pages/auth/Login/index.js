@@ -25,7 +25,11 @@ const Login = (props) => {
     if (intended) {
       return
     } else {
-      if (user && user.token) history.push('/')
+      if (user.userDatas.role === 'user') {
+        history.push('/')
+      } else {
+        history.push('/admin/dashboard')
+      }
     }
   }, [user, history])
 

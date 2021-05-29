@@ -12,7 +12,7 @@ const AdminRoute = ({ children, ...rest }) => {
     if (user && user.token) {
       axios
         .post(
-          'https://mbooks-app.herokuapp.com/api/auth/current-admin',
+          'http://localhost:8000/api/auth/current-admin',
           {},
           { headers: { authorization: user.token } }
         )

@@ -48,7 +48,7 @@
   },
   "scripts": {
     "start": "yarn watch:css && react-scripts start",
-    "build": "yarn build:css && react-scripts build",
+    "build": "react-scripts build",
     "build:css": "postcss src/assets/styles/tailwind.css -o src/assets/styles/main.css",
     "watch:css": "postcss src/assets/styles/tailwind.css -o src/assets/styles/main.css",
     "test": "react-scripts test",

@@ -1,0 +1,67 @@
+[1017/082112.771:ERROR:directory_reader_win.cc(43)] FindFirstFile: The system cannot find the path specified. (0x3)
+[1018/020807.542:ERROR:process_reader_win.cc(123)] NtOpenThread: {Access Denied} A process has requested access to an object, but has not been granted those access rights. (0xc0000022)
+[1018/020807.546:ERROR:process_reader_win.cc(123)] NtOpenThread: {Access Denied} A process has requested access to an object, but has not been granted those access rights. (0xc0000022)
+[1018/020807.599:ERROR:exception_snapshot_win.cc(99)] thread ID 16072 không tồn tại in process
+[1018/020807.577:ERROR:process_reader_win.cc(123)] NtOpenThread: {Access Denied} A process has requested access to an object, but has not been granted those access rights. (0xc0000022)
+[1018/020807.599:ERROR:exception_snapshot_win.cc(99)] thread ID 18956 không tồn tại in process
+[1018/020807.599:ERROR:scoped_process_suspend.cc(40)] NtResumeProcess: An attempt was made to access an exiting process. (0xc000010a)
+[1018/020807.621:ERROR:exception_snapshot_win.cc(99)] thread ID 15812 không tồn tại in process
+[1018/020807.541:ERROR:process_reader_win.cc(123)] NtOpenThread: {Access Denied} A process has requested access to an object, but has not been granted those access rights. (0xc0000022)
+[1018/020807.624:ERROR:exception_snapshot_win.cc(99)] thread ID 15808 không tồn tại in process
+[1019/152832.682:ERROR:directory_reader_win.cc(43)] FindFirstFile: The system cannot find the path specified. (0x3)
+[1019/170028.133:ERROR:process_reader_win.cc(123)] NtOpenThread: {Access Denied} A process has requested access to an object, but has not been granted those access rights. (0xc0000022)
+[1019/170028.185:ERROR:exception_snapshot_win.cc(99)] thread ID 15800 không tồn tại in process
+[1019/170028.185:ERROR:scoped_process_suspend.cc(40)] NtResumeProcess: An attempt was made to access an exiting process. (0xc000010a)
+[1027/074419.785:ERROR:directory_reader_win.cc(43)] FindFirstFile: The system cannot find the path specified. (0x3)
+[1029/012748.094:ERROR:directory_reader_win.cc(43)] FindFirstFile: The system cannot find the path specified. (0x3)
+[1030/013240.588:ERROR:process_reader_win.cc(123)] NtOpenThread: {Access Denied} A process has requested access to an object, but has not been granted those access rights. (0xc0000022)
+[1030/013240.552:ERROR:process_reader_win.cc(123)] NtOpenThread: {Access Denied} A process has requested access to an object, but has not been granted those access rights. (0xc0000022)
+[1030/013240.646:ERROR:exception_snapshot_win.cc(99)] thread ID 17108 không tồn tại in process
+[1030/013240.551:ERROR:process_reader_win.cc(123)] NtOpenThread: {Access Denied} A process has requested access to an object, but has not been granted those access rights. (0xc0000022)
+[1030/013240.586:ERROR:process_reader_win.cc(123)] NtOpenThread: {Access Denied} A process has requested access to an object, but has not been granted those access rights. (0xc0000022)
+[1030/013240.646:ERROR:exception_snapshot_win.cc(99)] thread ID 18736 không tồn tại in process
+[1030/013240.646:ERROR:exception_snapshot_win.cc(99)] thread ID 16468 không tồn tại in process
+[1030/013240.646:ERROR:exception_snapshot_win.cc(99)] thread ID 18360 không tồn tại in process
+[1030/013240.590:ERROR:process_reader_win.cc(123)] NtOpenThread: {Access Denied} A process has requested access to an object, but has not been granted those access rights. (0xc0000022)
+[1030/013240.647:ERROR:exception_snapshot_win.cc(99)] thread ID 6860 không tồn tại in process
+[1030/013240.667:ERROR:process_reader_win.cc(123)] NtOpenThread: {Access Denied} A process has requested access to an object, but has not been granted those access rights. (0xc0000022)
+[1030/013240.668:ERROR:exception_snapshot_win.cc(99)] thread ID 6396 không tồn tại in process
+[1030/013240.854:ERROR:process_info.cc(329)] VirtualQueryEx: Access is denied. (0x5)
+[1030/013240.854:ERROR:process_info.cc(556)] ReadMemoryInfo failed
+[1030/013240.854:ERROR:process_info.cc(329)] VirtualQueryEx: Access is denied. (0x5)
+[1030/013240.854:ERROR:process_info.cc(556)] ReadMemoryInfo failed
+[1030/013240.854:ERROR:process_info.cc(329)] VirtualQueryEx: Access is denied. (0x5)
+[1030/013240.854:ERROR:process_info.cc(329)] VirtualQueryEx: Access is denied. (0x5)
+[1030/013240.914:ERROR:process_info.cc(329)] VirtualQueryEx: Access is denied. (0x5)
+[1030/013240.914:ERROR:process_info.cc(556)] ReadMemoryInfo failed
+[1030/013240.914:ERROR:scoped_process_suspend.cc(40)] NtResumeProcess: An attempt was made to access an exiting process. (0xc000010a)
+[1030/013240.854:ERROR:process_info.cc(329)] VirtualQueryEx: Access is denied. (0x5)
+[1030/013240.896:ERROR:process_info.cc(329)] VirtualQueryEx: Access is denied. (0x5)
+[1030/013240.854:ERROR:scoped_process_suspend.cc(40)] NtResumeProcess: An attempt was made to access an exiting process. (0xc000010a)
+[1030/013240.931:ERROR:process_info.cc(556)] ReadMemoryInfo failed
+[1030/013240.932:ERROR:scoped_process_suspend.cc(40)] NtResumeProcess: An attempt was made to access an exiting process. (0xc000010a)
+[1030/013240.932:ERROR:process_info.cc(556)] ReadMemoryInfo failed
+[1030/013240.932:ERROR:scoped_process_suspend.cc(40)] NtResumeProcess: An attempt was made to access an exiting process. (0xc000010a)
+[1030/013240.933:ERROR:process_info.cc(556)] ReadMemoryInfo failed
+[1030/013240.933:ERROR:process_memory_win.cc(39)] Failed to initialize ProcessInfo.
+[1030/013240.933:ERROR:scoped_process_suspend.cc(40)] NtResumeProcess: An attempt was made to access an exiting process. (0xc000010a)
+[1030/013240.854:ERROR:scoped_process_suspend.cc(40)] NtResumeProcess: An attempt was made to access an exiting process. (0xc000010a)
+[1030/013240.946:ERROR:process_info.cc(556)] ReadMemoryInfo failed
+[1030/013240.946:ERROR:scoped_process_suspend.cc(40)] NtResumeProcess: An attempt was made to access an exiting process. (0xc000010a)
+[1030/071955.968:ERROR:directory_reader_win.cc(43)] FindFirstFile: The system cannot find the path specified. (0x3)
+[1031/192919.037:ERROR:directory_reader_win.cc(43)] FindFirstFile: The system cannot find the path specified. (0x3)
+[1101/232119.048:ERROR:process_reader_win.cc(123)] NtOpenThread: {Access Denied} A process has requested access to an object, but has not been granted those access rights. (0xc0000022)
+[1101/232119.056:ERROR:exception_snapshot_win.cc(99)] thread ID 18784 không tồn tại in process
+[1101/232119.056:ERROR:process_reader_win.cc(123)] NtOpenThread: {Access Denied} A process has requested access to an object, but has not been granted those access rights. (0xc0000022)
+[1101/232119.057:ERROR:exception_snapshot_win.cc(99)] thread ID 21076 không tồn tại in process
+[1101/232119.049:ERROR:process_reader_win.cc(123)] NtOpenThread: {Access Denied} A process has requested access to an object, but has not been granted those access rights. (0xc0000022)
+[1101/232119.057:ERROR:exception_snapshot_win.cc(99)] thread ID 20868 không tồn tại in process
+[1101/232119.085:ERROR:process_reader_win.cc(123)] NtOpenThread: {Access Denied} A process has requested access to an object, but has not been granted those access rights. (0xc0000022)
+[1101/232119.085:ERROR:exception_snapshot_win.cc(99)] thread ID 14864 không tồn tại in process
+[1101/232119.133:ERROR:process_reader_win.cc(123)] NtOpenThread: {Access Denied} A process has requested access to an object, but has not been granted those access rights. (0xc0000022)
+[1101/232119.133:ERROR:exception_snapshot_win.cc(99)] thread ID 5284 không tồn tại in process
+[1101/232119.173:ERROR:process_reader_win.cc(123)] NtOpenThread: {Access Denied} A process has requested access to an object, but has not been granted those access rights. (0xc0000022)
+[1101/232119.174:ERROR:exception_snapshot_win.cc(99)] thread ID 15156 không tồn tại in process
+[1101/232119.193:ERROR:process_reader_win.cc(123)] NtOpenThread: {Access Denied} A process has requested access to an object, but has not been granted those access rights. (0xc0000022)
+[1101/232119.193:ERROR:exception_snapshot_win.cc(99)] thread ID 14264 không tồn tại in process
+[1120/222524.836:ERROR:directory_reader_win.cc(43)] FindFirstFile: The system cannot find the path specified. (0x3)

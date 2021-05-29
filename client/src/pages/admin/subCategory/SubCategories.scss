@@ -1,0 +1,35 @@
+.sub {
+  padding: 20px;
+  &__form,
+  &__search {
+    width: 40%;
+  }
+  &__edit {
+    text-decoration: none;
+    color: #ffffff;
+
+    &:hover {
+      color: #ffffff;
+    }
+  }
+  &__icon {
+    margin-right: 4px;
+  }
+  &__select {
+    margin: 10px 0;
+  }
+}
+.list {
+  &__category {
+    padding: 20px;
+  }
+}
+.color-red {
+  color: red;
+}
+.form-input {
+  margin: 20px 0;
+}
+.mr {
+  margin-right: 4px;
+}

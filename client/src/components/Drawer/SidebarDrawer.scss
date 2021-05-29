@@ -1,0 +1,40 @@
+.dra {
+  &__list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    &-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 0 12px 0;
+      border-bottom: 1px solid #eeeeee;
+    }
+  }
+  &__wrap {
+    display: flex;
+    align-items: center;
+    &-avatar {
+      width: 74px;
+      height: auto;
+    }
+  }
+  &__content {
+    padding-left: 12px;
+    &-name {
+      margin-bottom: 3px;
+    }
+  }
+  &__price {
+    text-align: right;
+    &-red {
+      color: #f5222d;
+      font-weight: 600;
+    }
+  }
+  &__btn {
+    width: 100%;
+    text-align: center;
+    margin-top: 20px;
+  }
+}

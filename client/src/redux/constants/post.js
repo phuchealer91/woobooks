@@ -1,0 +1,7 @@
+export const LOADING_POST = 'LOADING_POST'
+export const CREATE_POST = 'CREATE_POST'
+export const UPDATE_POST = 'UPDATE_POST'
+export const GET_POSTS = 'GET_POSTS'
+export const STATUS_POST = 'STATUS_POST'
+export const LIKE_POST = 'LIKE_POST'
+export const UNLIKE_POST = 'UNLIKE_POST'

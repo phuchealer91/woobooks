@@ -1,0 +1,17 @@
+.upload {
+  margin: 10px 0;
+  &__preview {
+    margin: 10px 0;
+  }
+}
+.label {
+  border: 1px dashed #ccc;
+  background-color: #40a9ff;
+  padding: 6px;
+  border-radius: 6px;
+  color: #333333;
+  font-weight: 500;
+}
+.ml-3 {
+  margin: 10px;
+}

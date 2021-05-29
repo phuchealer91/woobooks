@@ -1,0 +1,23 @@
+.subCategory {
+  &__heading {
+    font-size: 20px;
+  }
+  &-list {
+    list-style-type: none;
+    padding: 0;
+    &__item {
+      display: inline-block;
+      padding: 12px 16px;
+      &-btn {
+        display: grid;
+        place-items: center;
+        height: 100%;
+      }
+      &-link {
+        font-weight: 600;
+        color: #555555;
+        font-size: 1.2rem;
+      }
+    }
+  }
+}

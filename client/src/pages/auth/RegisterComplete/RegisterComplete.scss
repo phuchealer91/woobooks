@@ -1,0 +1,9 @@
+.register-complete {
+  margin-top: 50px;
+  &__wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}

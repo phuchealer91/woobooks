@@ -1,0 +1,36 @@
+.category {
+  padding: 20px;
+  &__form,
+  &__search {
+    width: 40%;
+  }
+  &__icon {
+    margin-right: 4px;
+  }
+  &__edit {
+    text-decoration: none;
+    color: #ffffff;
+
+    &:hover {
+      color: #ffffff;
+    }
+  }
+}
+.list {
+  &__category {
+    padding: 20px;
+  }
+}
+.color-red {
+  color: red;
+}
+.form-input {
+  margin: 20px 0;
+}
+.mr {
+  margin-right: 4px;
+}
+.category__edit {
+  color: #ffffff;
+  margin-left: 4px;
+}

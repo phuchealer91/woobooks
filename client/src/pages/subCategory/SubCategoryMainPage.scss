@@ -1,0 +1,25 @@
+.sub-category-main {
+  padding: 30px;
+  // background-color: #f2f2f2;
+  &__heading {
+    color: #333;
+    font-size: 20px;
+    font-weight: 600;
+    padding: 20px 10px;
+    position: relative;
+    &:before {
+      content: '';
+      position: absolute;
+      height: 50%;
+      width: 2px;
+      background: #333;
+      margin-left: -10px;
+    }
+  }
+  &__red {
+    color: #f5222d;
+  }
+  &__list {
+    // background-color: #f2f2f2;
+  }
+}

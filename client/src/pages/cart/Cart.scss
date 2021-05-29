@@ -1,0 +1,50 @@
+.shopping {
+  &-cart {
+    margin: 20px;
+  }
+  &__wrap {
+    text-align: center;
+  }
+  &__nothing {
+    display: inline-block;
+    margin-bottom: 0;
+  }
+  &__heading {
+    font-size: 20px;
+    &-red {
+      color: #f5222d;
+    }
+  }
+  &__detail,
+  &__total {
+    font-size: 18px;
+    &-wrap {
+      padding-left: 10px;
+    }
+    &-index {
+      font-weight: 700;
+    }
+    &-item {
+      font-size: 16px;
+      list-style-type: none;
+    }
+  }
+  &__checkout {
+    margin-top: 20px;
+  }
+  &__btn {
+    padding: 5px 0;
+  }
+  &__list {
+    &-item {
+      margin-right: 12px;
+    }
+  }
+}
+
+.text-success {
+  color: #52c41a;
+}
+.text-danger {
+  color: #f5222d;
+}

@@ -1,0 +1,21 @@
+.mr {
+  margin-right: 4px;
+}
+.product {
+  padding: 20px;
+  &__form,
+  &__search {
+    width: 40%;
+  }
+  &__edit {
+    text-decoration: none;
+    color: #ffffff;
+
+    &:hover {
+      color: #ffffff;
+    }
+  }
+  &__icon {
+    margin-right: 4px;
+  }
+}

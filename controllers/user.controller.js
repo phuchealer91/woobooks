@@ -124,12 +124,14 @@ module.exports.createOrder = async (req, res) => {
     const { products, deliveryAddress, applyCoupon } = await Cart.findOne({
       orderedBy: user._id,
     }).exec()
+
     const newOrder = await new Order({
       products,
       paymentIntent,
       deliveryAddress,
       applyCoupon: applyCoupon ? applyCoupon._id : null,
       orderedBy: user._id,
+      feeShip: deliveryAddress.feeShip,
     }).save()
     // increment sold, decrement quantity
     let bulk = products.map((item) => {
@@ -257,7 +259,7 @@ module.exports.removeWishList = async (req, res) => {
 }
 
 module.exports.addAddress = async (req, res) => {
-  const { name, phone, mainAddress, fullAddress } = req.body
+  const { name, phone, mainAddress, fullAddress, feeShip } = req.body
   const userAddress = await User.findOneAndUpdate(
     { email: req.user.email },
     {
@@ -267,6 +269,7 @@ module.exports.addAddress = async (req, res) => {
           phone,
           mainAddress,
           fullAddress,
+          feeShip,
         },
       },
     },

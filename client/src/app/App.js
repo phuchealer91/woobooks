@@ -22,6 +22,7 @@ import SocketClient from '../SocketClient'
 import { Spin } from 'antd'
 import MessengerCustomerChat from 'react-messenger-customer-chat'
 import { getSuggestions } from '../redux/actions/suggestions'
+import ConversationBot from '../ConversationBot'
 
 const Addressx = lazy(() => import('../pages/address'))
 const DashBoard = lazy(() => import('../pages/admin/DashBoard'))
@@ -34,6 +35,7 @@ const CreateCategory = lazy(() =>
 const UpdateCategory = lazy(() =>
   import('../pages/admin/category/UpdateCategory')
 )
+const CreateFee = lazy(() => import('../pages/admin/fee/CreateFee'))
 const CreateCoupon = lazy(() => import('../pages/admin/coupon/CreateCoupon'))
 const UsersList = lazy(() => import('../pages/admin/userLists/UsersList'))
 const OrdersList = lazy(() => import('../pages/admin/ordersList/OrdersList'))
@@ -92,47 +94,38 @@ const WishList = lazy(() => import('../pages/user/WishList'))
 const UserAddress = lazy(() => import('../pages/user/UserAddress'))
 const UserProfile = lazy(() => import('../pages/user/UserProfile'))
 
-export default function App() {
+function App() {
   const dispatch = useDispatch()
-  let { user: users, homePost, call } = useSelector((state) => state)
+  let { user: users, call } = useSelector((state) => state)
   const { pathname } = useLocation()
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
-      if (user) {
-        dispatch({
-          type: 'NOTIFY',
-          payload: { loading: true },
+      if (!user) {
+        return
+      }
+      const token = await user.getIdToken()
+      window.localStorage.setItem('token', token)
+      try {
+        await currentUsers().then((res) => {
+          const data = {
+            token,
+            userDatas: res.data,
+            notificationsCount: res.data.notifications.newNotifications,
+          }
+          dispatch({
+            type: 'LOGGIN_IN_USER',
+            payload: data,
+          })
+          // dispatch({
+          //   type: 'NOTIFY',
+          //   payload: { loading: false },
+          // })
         })
-        const idTokenUser = await user.getIdTokenResult(true)
-        window.localStorage.setItem('token', idTokenUser.token)
-        currentUsers()
-          .then((res) => {
-            if (res.data) {
-              const data = {
-                token: idTokenUser.token,
-                userDatas: res.data,
-                notificationsCount: res.data.notifications.newNotifications,
-              }
-              dispatch({
-                type: 'LOGGIN_IN_USER',
-                payload: data,
-              })
-              dispatch({
-                type: 'NOTIFY',
-                payload: { loading: false },
-              })
-            }
-          })
-          .catch((error) => {
-            dispatch({
-              type: 'NOTIFY',
-              payload: { loading: false },
-            })
-            console.log('errorerrorerrorerrorerrorerror', error)
-          })
+      } catch (error) {
+        console.log('error', error)
       }
     })
-    const socket = io()
+    const socket = io('http://localhost:8000')
     dispatch({
       type: types.SOCKET,
       payload: socket,
@@ -142,6 +135,7 @@ export default function App() {
       socket.close()
     }
   }, [dispatch])
+
   useEffect(() => {
     if (users.token) {
       dispatch(getPostsx())
@@ -308,6 +302,11 @@ export default function App() {
         />
         <AdminRoute
           exact
+          path={`/${PATHS.ADMIN}/${PATHS.FEE}`}
+          component={CreateFee}
+        />
+        <AdminRoute
+          exact
           path={`/${PATHS.ADMIN}/${PATHS.COUPON}`}
           component={CreateCoupon}
         />
@@ -373,6 +372,8 @@ export default function App() {
         pageId="102783052012250"
         appId="1419843074891555"
       />
+      <ConversationBot />
     </Suspense>
   )
 }
+export default App

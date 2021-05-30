@@ -35,6 +35,7 @@ const userSchema = new schema(
         phone: { type: Number, required: true },
         mainAddress: { type: String, required: true },
         fullAddress: { type: String, required: true },
+        feeShip: { type: Number, default: 0 },
       },
     ],
     wishlist: [{ type: ObjectId, ref: 'Product' }],

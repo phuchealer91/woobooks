@@ -1,15 +1,15 @@
-import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { getCategories } from '../../redux/actions/category'
+import { getCategories } from '../../apis/category'
 import PATHS from '../../redux/constants/paths'
 import './CategoryList.scss'
 function CategoryList(props) {
-  const dispatch = useDispatch()
-  const { listCategories } = useSelector((state) => state.category)
+  const [listCategories, setListCategories] = useState([])
   useEffect(() => {
-    dispatch(getCategories())
-  }, [dispatch])
+    getCategories().then((res) => {
+      setListCategories(res.data.categories)
+    })
+  }, [])
   return (
     <React.Fragment>
       <section className=" sm:px-4 px-0 mt-2 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 md:gap-4 gap-0">

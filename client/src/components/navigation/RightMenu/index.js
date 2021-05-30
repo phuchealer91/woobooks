@@ -22,6 +22,9 @@ function RightMenu() {
             {/*trending tweet section*/}
 
             <div className="rounded-lg  bg-white overflow-hidden shadow-lg m-4">
+              <div className="px-4 pt-6 text-sm text-gray-600 font-semibold">
+                Đề xuất cho bạn
+              </div>
               {suggestions.loading ? (
                 <div className="text-center mx-auto">
                   <Spin size="default" />

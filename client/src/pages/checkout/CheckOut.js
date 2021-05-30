@@ -1,5 +1,5 @@
-import { DeleteOutlined } from '@ant-design/icons'
-import { Tag } from 'antd'
+import { DeleteOutlined, ExclamationCircleOutlined } from '@ant-design/icons'
+import { Modal, Tag } from 'antd'
 import React, { useEffect, useState } from 'react'
 import ModalImage from 'react-modal-image'
 import { useDispatch } from 'react-redux'
@@ -32,7 +32,6 @@ function CheckOut(props) {
   // discount price
   const [totalAfterDiscount, setTotalAfterDiscount] = useState(0)
   const [isLoading, setIsLoading] = useState(false)
-  console.log('hello enh ', products)
   const history = useHistory()
   useEffect(() => {
     getUserCarts().then((res) => {
@@ -59,7 +58,6 @@ function CheckOut(props) {
       history.push('/')
     })
   }
-
   function loadUserAddress() {
     setIsLoading(true)
     getAddresss()
@@ -75,22 +73,30 @@ function CheckOut(props) {
         toast.error('Lỗi lấy địa chỉ', error)
       })
   }
-  function onHandleDelete(addressId) {
-    setAddressId(addressId)
-    setVisible(true)
+
+  function confirm(_id) {
+    Modal.confirm({
+      title: 'Xác nhận xóa địa chỉ giao hàng',
+      icon: <ExclamationCircleOutlined />,
+      content:
+        'Sau khi xóa địa chỉ giao hàng bạn sẽ không thể khôi phục nó. Bạn chắc chắn muốn xóa chứ?',
+      okText: 'Xóa',
+      cancelText: 'Hủy',
+      onOk: () => {
+        removeAddress(_id)
+          .then((res) => {
+            toast.success('Xóa địa chỉ thành công')
+            setVisible(false)
+            loadUserAddress()
+          })
+          .catch((error) => {
+            setVisible(false)
+            toast.error('Xóa địa chỉ thất bại')
+          })
+      },
+    })
   }
-  function onHandleDeleted() {
-    removeAddress(addressId)
-      .then((res) => {
-        toast.success('Xóa địa chỉ thành công')
-        setVisible(false)
-        loadUserAddress()
-      })
-      .catch((error) => {
-        setVisible(false)
-        toast.error('Xóa địa chỉ thất bại')
-      })
-  }
+
   function onHandleAddressSelected(deliveryAddress) {
     setAddressSaved(deliveryAddress)
 
@@ -128,6 +134,7 @@ function CheckOut(props) {
       history.push('/payment')
     }
   }
+
   return (
     <div>
       <div className="xl:max-w-7xl mx-auto bg-white rounded mt-4">
@@ -147,20 +154,22 @@ function CheckOut(props) {
           </div>
 
           <div className="bg-white shadow-md rounded my-6 overflow-x-auto">
-            <table className=" w-full table-auto text-center ">
-              <thead>
-                <tr className="bg-gray-200 text-gray-600 text-sm leading-normal">
-                  <th className="py-3 px-4 text-left">STT</th>
-                  <th className="py-3 px-4 text-left">Tên</th>
-                  <th className="py-3 px-4 text-left">Địa chỉ</th>
-                  <th className="py-3 px-4 text-left">SDT</th>
-                  <th className="py-3 px-4 text-left">Thao tác</th>
-                </tr>
-              </thead>
-              {isLoading ? (
-                <Loading />
-              ) : listAddress.length > 0 ? (
-                listAddress.map((addr, idx) => (
+            {isLoading ? (
+              <Loading />
+            ) : listAddress.length > 0 ? (
+              <table className=" w-full table-auto text-center ">
+                <thead>
+                  <tr className="bg-gray-200 text-gray-600 text-sm leading-normal">
+                    <th className="py-3 px-4 text-left">STT</th>
+                    <th className="py-3 px-4 text-left">Tên</th>
+                    <th className="py-3 px-4 text-left">Địa chỉ</th>
+                    <th className="py-3 px-4 text-left">Phí vận chuyển</th>
+                    <th className="py-3 px-4 text-left">SDT</th>
+                    <th className="py-3 px-4 text-left">Thao tác</th>
+                  </tr>
+                </thead>
+
+                {listAddress.map((addr, idx) => (
                   <tbody
                     className="text-gray-600 text-sm font-light"
                     key={addr._id}
@@ -182,7 +191,7 @@ function CheckOut(props) {
                           <span className="font-semibold">{addr.name}</span>
                         </div>
                       </td>
-                      <td className="py-3 px-6 text-left  w-2/5">
+                      <td className="py-3 px-6 text-left  w-2/6">
                         {idx === 0 && addr._id === addressSaved?._id ? (
                           <Tag color="green-inverse">Mặc định</Tag>
                         ) : (
@@ -190,6 +199,16 @@ function CheckOut(props) {
                         )}
                         <div className="mt-2">
                           {addr.fullAddress} - {addr.mainAddress}
+                        </div>
+                      </td>
+                      <td className="py-3 px-6">
+                        <div className="text-left">
+                          <Tag
+                            color="magenta"
+                            className="text-gray-600 font-semibold"
+                          >
+                            {formatPrice(addr.feeShip)}đ
+                          </Tag>
                         </div>
                       </td>
                       <td className="py-3 px-6">
@@ -205,7 +224,7 @@ function CheckOut(props) {
                         </button>
 
                         <button
-                          onClick={() => onHandleDelete(addr._id)}
+                          onClick={() => confirm(addr._id)}
                           className=" px-4 py-2 bg-red-500 text-blue-50 max-w-max shadow-sm hover:shadow-lg rounded"
                         >
                           <DeleteOutlined />
@@ -213,9 +232,11 @@ function CheckOut(props) {
                       </td>
                     </tr>
                   </tbody>
-                ))
-              ) : (
-                <div className="border border-dashed border-red-600 px-4 py-3 mt-3 mx-auto">
+                ))}
+              </table>
+            ) : (
+              <div className=" px-4 py-3 mt-3 flex justify-center items-center">
+                <div>
                   <span className="text-red-600 font-semibold text-sm">
                     Hiện tại bạn chưa có địa chỉ để chúng tôi giao hàng !{' '}
                   </span>
@@ -227,8 +248,8 @@ function CheckOut(props) {
                     Bấm vào đây để thêm địa chỉ giao hàng
                   </button>
                 </div>
-              )}
-            </table>
+              </div>
+            )}
             {/* <div className="py-6 flex justify-center items-center">
               <Pagination
                 current={page}
@@ -370,13 +391,19 @@ function CheckOut(props) {
                 đ
               </span>
             </div>
+            <div className=" text-base font-semibold">
+              <span className="text-base text-gray-500">Phí vận chuyển:</span>{' '}
+              <span className="text-lg text-red-500">
+                {formatPrice(addressSaved?.feeShip)}
+              </span>
+            </div>
             <div className=" text-blue-600 text-xl font-semibold">
               <span className="text-lg text-gray-600">
                 Tổng Số Tiền (gồm VAT):
               </span>{' '}
               {totalAfterDiscount > 0
-                ? formatPrice(totalAfterDiscount)
-                : formatPrice(total)}
+                ? formatPrice(totalAfterDiscount + addressSaved?.feeShip)
+                : formatPrice(total + addressSaved?.feeShip)}
               đ
             </div>
           </div>
@@ -389,7 +416,7 @@ function CheckOut(props) {
               Xóa đơn hàng
             </button>
             <button
-              // disabled={!addressSaved || !products.length}
+              disabled={!addressSaved || !products.length}
               onClick={onHandlePayMent}
               className="btn bg-blue-600 px-3 py-3 uppercase w-1/2 md:w-1/4 mt-2 font-semibold text-white"
             >

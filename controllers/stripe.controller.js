@@ -6,14 +6,18 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET)
 module.exports.createPaymentIntent = async (req, res) => {
   const { isCoupons } = req.body
   const user = await User.findOne({ email: req.user.email }).exec()
-  const { cartTotal, totalAfterDiscount } = await Cart.findOne({
-    orderedBy: user._id,
-  }).exec()
+  const { cartTotal, totalAfterDiscount, deliveryAddress } = await Cart.findOne(
+    {
+      orderedBy: user._id,
+    }
+  ).exec()
   let totalCurrent = 0
   if (isCoupons && totalAfterDiscount) {
-    totalCurrent = Math.round(totalAfterDiscount / 100)
+    totalCurrent = Math.round(
+      (totalAfterDiscount + deliveryAddress.feeShip) / 100
+    )
   } else {
-    totalCurrent = Math.round(cartTotal / 100)
+    totalCurrent = Math.round((cartTotal + deliveryAddress.feeShip) / 100)
   }
   // if (isCoupons && totalAfterDiscount) {
   //   totalCurrent = totalAfterDiscount * 100

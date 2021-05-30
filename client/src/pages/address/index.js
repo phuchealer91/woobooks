@@ -2,11 +2,13 @@ import { Formik } from 'formik'
 import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { addAddresss } from '../../apis/cart'
+import { getFees } from '../../apis/fee'
 import {
   getDistrictWards,
   getProvinceDistrict,
   getProvinces,
 } from '../../apis/province'
+import { formatPrice } from '../../helpers/formatPrice'
 
 function Addressx(props) {
   const history = useHistory()
@@ -17,10 +19,19 @@ function Addressx(props) {
   const [valuesx, setValuesx] = useState([])
   const [valuess, setValuess] = useState([])
   const [valuesss, setValuesss] = useState([])
+  const [fees, setFees] = useState([])
   useEffect(() => {
     getProvincess()
+    loadFees()
   }, [])
 
+  function loadFees() {
+    getFees({})
+      .then((res) => {
+        setFees(res.data.fee)
+      })
+      .catch((err) => console.log('Error anh em', err))
+  }
   function getProvincess() {
     getProvinces({})
       .then((res) => {
@@ -60,6 +71,20 @@ function Addressx(props) {
   function handleChangeDistrictWard(e) {
     setDistrictWard(e.target.value)
   }
+  function setFeeShip() {
+    const shipping =
+      fees &&
+      fees.filter(
+        (item) =>
+          districtWard?.split(',')[2].toLowerCase().trim() ===
+          item.area.toLowerCase().trim()
+      )[0]
+    if (shipping && shipping.feeShipping) {
+      return shipping.feeShipping
+    } else {
+      return 30000
+    }
+  }
   return (
     <div>
       <div className="xl:max-w-7xl mx-auto bg-white rounded">
@@ -86,7 +111,11 @@ function Addressx(props) {
               //    return errors;
               //  }}
               onSubmit={(values, { setSubmitting }) => {
-                const valuesss = { ...values, mainAddress: districtWard }
+                const valuesss = {
+                  ...values,
+                  mainAddress: districtWard,
+                  feeShip: setFeeShip(),
+                }
                 addAddresss(valuesss).then((res) => {
                   history.push('/check-out')
                 })
@@ -209,6 +238,20 @@ function Addressx(props) {
                         placeholder="Nhập địa chỉ nhận hàng"
                         className="ml-2 py-2 w-align border px-3 text-grey-darkest rounded calc"
                       />
+                    </div>
+                    <div className="my-2 flex items-center">
+                      <span>
+                        Phí vận chuyển của khu vực{' '}
+                        <span className="text-gray-600 font-semibold">
+                          {districtWard}
+                        </span>
+                        :{' '}
+                      </span>
+                      {districtWard && (
+                        <div className="ml-2 text-red-500 font-semibold text-base">
+                          {formatPrice(setFeeShip())}đ
+                        </div>
+                      )}
                     </div>
                   </div>
 

@@ -52,6 +52,7 @@ const PATHS = {
   SALE: 'sale',
   OVERVIEW: 'overview',
   MESSAGE: 'message',
+  FEE: 'fee',
 }
 
 export default PATHS

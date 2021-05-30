@@ -1,8 +1,8 @@
 const admin = require('../firebase')
 const User = require('../models/user.model')
 module.exports.isAuth = async (req, res, next) => {
-  console.log('req', req.headers)
-  console.log('header', req.headers.authorization)
+  // console.log('req', req.headers)
+  // console.log('header', req.headers.authorization)
   try {
     const firebaseUser = await admin
       .auth()

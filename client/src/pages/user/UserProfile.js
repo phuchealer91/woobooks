@@ -50,7 +50,7 @@ const UserProfile = () => {
                           >
                             <img
                               style={{ height: '9rem', width: '9rem' }}
-                              className="md rounded-full relative border-2 border-blue-600"
+                              className="md rounded-full relative shadow-md"
                               src={item.photoURL}
                               alt="avatar"
                             />

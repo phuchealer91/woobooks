@@ -4,10 +4,10 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { getWishLists, removeWishLists } from '../../apis/cart'
-import { EmptyData } from '../../components/Empty'
 import { UserLayouts } from '../../components/navigation/Layouts/Layouts'
 import SectionTitle from '../../components/SectionTitle/SectionTitle'
 import { formatPrice } from '../../helpers/formatPrice'
+import { EmptyBox } from '../../helpers/icons'
 function WishList(props) {
   const [wishList, setWishList] = useState([])
   const [totalWishList, setTotalWishList] = useState(0)
@@ -44,7 +44,7 @@ function WishList(props) {
         <div className="w-full mx-auto bg-white rounded">
           <div className="px-3 pt-3 pb-3">
             <SectionTitle>Danh sách yêu thích</SectionTitle>
-            {wishList[0] !== null ? (
+            {wishList.length > 0 ? (
               wishList.map((w, idx) => {
                 return (
                   <div
@@ -80,7 +80,9 @@ function WishList(props) {
                 )
               })
             ) : (
-              <EmptyData />
+              <div className="flex justify-center items-center py-10">
+                <EmptyBox />
+              </div>
             )}
           </div>
           {totalWishList >= 8 && (

@@ -141,6 +141,12 @@ const AdminSideBar = () => {
 
       <Menu.Item
         icon={<BarcodeOutlined />}
+        key={`/${PATHS.ADMIN}/${PATHS.FEE}`}
+      >
+        Phí vận chuyển
+      </Menu.Item>
+      <Menu.Item
+        icon={<BarcodeOutlined />}
         key={`/${PATHS.ADMIN}/${PATHS.COUPON}`}
       >
         Mã giảm giá

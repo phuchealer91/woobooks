@@ -1,6 +1,7 @@
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons'
 import { Button, Form, Spin, Table } from 'antd'
 import React, { useEffect, useState } from 'react'
+import ReactQuill from 'react-quill'
 import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import {
@@ -20,7 +21,7 @@ const CreateSupplier = () => {
   const [showModal, setShowModal] = useState(false)
   const [loading, setLoading] = useState(false)
   const [suppliers, setSuppliers] = useState([])
-
+  const [bios, setBios] = useState('')
   const [supplierToDelete, setSupplierToDelete] = useState('')
   const [keyword, setKeyword] = useState('')
   const totalSupplier = suppliers.length
@@ -33,9 +34,10 @@ const CreateSupplier = () => {
       setSuppliers(c.data.suppliers)
     })
   function onFinish({ name }) {
-    createSuppliers({ name })
+    createSuppliers({ name, bio: bios })
       .then((res) => {
         setLoading(false)
+        setBios('')
         toast.success(`Tạo ${res.data.supplier.name} thành công `)
         loadSuppliers()
       })
@@ -70,15 +72,19 @@ const CreateSupplier = () => {
   function closeModal() {
     setShowModal(false)
   }
+  function onHandleChanges(value) {
+    setBios(value)
+  }
   // Search
   const searched = (keyword) => (supplier) =>
     supplier.name.toLowerCase().includes(keyword)
   const dataSource =
     suppliers &&
     suppliers.filter(searched(keyword)).map((item) => ({
-      Id: item._id,
+      Id: item._id.substring(0, 10),
       Name: item.name,
       Slug: item.slug,
+      // Bio: item.bio,
     }))
   const columns = [
     {
@@ -96,6 +102,14 @@ const CreateSupplier = () => {
       dataIndex: 'Slug',
       key: 'slug',
     },
+    // {
+    //   title: 'Tóm tắt',
+    //   dataIndex: 'Bio',
+    //   key: 'bio',
+    //   render: (text, record) => (
+    //     <div dangerouslySetInnerHtml={{ __html: record.Bio }} />
+    //   ),
+    // },
     {
       title: 'Thao tác',
       dataIndex: '',
@@ -147,8 +161,23 @@ const CreateSupplier = () => {
           )}
           <Form form={form} onFinish={onFinish}>
             <FormSupplier />
+            <div className="pb-2 -mt-2">Thông tin của nhà cung cấp</div>
+            <ReactQuill
+              value={bios}
+              onChange={onHandleChanges}
+              placeholder="Điền thông tin nhà cung cấp"
+              className="mb-3"
+            />
+            <Button
+              htmlType="submit"
+              type="primary"
+              size="large"
+              className="py-2 rounded font-semibold"
+            >
+              Thêm
+            </Button>
           </Form>
-          <h3 className="text-sm text-gray-600 pb-1">
+          <h3 className="text-sm text-gray-600 py-2">
             {' '}
             Danh sách nhà cung cấp{' '}
             <span className="font-semibold">({totalSupplier})</span>

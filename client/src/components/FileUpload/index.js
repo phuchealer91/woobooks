@@ -7,11 +7,11 @@ import './FileUpload.scss'
 
 FileUpload.propTypes = {}
 
-function FileUpload({ product, setProduct, setIsLoading }) {
-  // const { user, product: pro } = useSelector((state) => ({ ...state }))
+function FileUpload({ values, setValues, setIsLoading }) {
+  // const { user, values: pro } = useSelector((state) => ({ ...state }))
   function handleUploadAndResize(e) {
     let files = e.target.files
-    let allImages = product.images
+    let allImages = values.images
     if (files) {
       setIsLoading(true)
       for (let i = 0; i < files.length; i++) {
@@ -27,7 +27,7 @@ function FileUpload({ product, setProduct, setIsLoading }) {
               uploadFileImages({ image: uri }).then((res) => {
                 setIsLoading(false)
                 allImages.push(res.data)
-                setProduct({ ...product, images: allImages })
+                setValues({ ...values, images: allImages })
               })
             } catch (error) {
               setIsLoading(false)
@@ -43,11 +43,11 @@ function FileUpload({ product, setProduct, setIsLoading }) {
     deleteUploadImage({ public_id })
       .then((res) => {
         setIsLoading(false)
-        const { images } = product
+        const { images } = values
         let newImages = images.filter((item) => {
           return item.public_id !== public_id
         })
-        setProduct({ ...product, images: newImages })
+        setValues({ ...values, images: newImages })
       })
       .catch((error) => {
         setIsLoading(false)
@@ -56,8 +56,8 @@ function FileUpload({ product, setProduct, setIsLoading }) {
   return (
     <div className="upload">
       <div className="upload__preview">
-        {product &&
-          product.images.map((image) => {
+        {values &&
+          values.images.map((image) => {
             return (
               <Badge
                 count="X"

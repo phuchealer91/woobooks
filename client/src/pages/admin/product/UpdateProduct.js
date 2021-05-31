@@ -1,18 +1,21 @@
-import { Col, Form, Row, Space, Spin } from 'antd'
-import moment from 'moment'
+import { Form, Space, Spin } from 'antd'
 import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
+import { useHistory, useParams } from 'react-router'
+import { toast } from 'react-toastify'
 import { getAuthors } from '../../../apis/author'
 import { getCategories, getCategorySubs } from '../../../apis/category'
-import { getProduct } from '../../../apis/product'
+import { getProduct, updateProducts } from '../../../apis/product'
 import { getSuppliers } from '../../../apis/supplier'
 import FileUpload from '../../../components/FileUpload'
-import { AdminSideBar } from '../../../components/navigation/SideBar'
+import { Layouts } from '../../../components/navigation/Layouts/Layouts'
+import SectionTitle from '../../../components/SectionTitle/SectionTitle'
 import FormUpdateProduct from './FormUpdateProduct'
-import './Product.scss'
 const layout = {
   labelCol: { span: 6 },
   wrapperCol: { span: 18 },
 }
+
 const initialState = {
   title: '',
   description: '',
@@ -22,88 +25,42 @@ const initialState = {
   subs: [],
   sale: '',
   quantity: '',
+  totalQuantity: '',
   pages: '',
   author: [],
-  supplier: [],
+  supplier: '',
   publisher: '',
   publication: null,
-  weight: '',
-  size: '',
   images: [],
   layouts: ['Bìa Cứng', 'Bìa Mềm'],
   languages: ['Tiếng Việt', 'Tiếng Anh'],
   layout: '',
   lang: '',
 }
-const UpdateProductss = ({ match }) => {
+const CreateProducts = () => {
   const [form] = Form.useForm()
+  const { user } = useSelector((state) => ({ ...state }))
   const [product, setProduct] = useState(initialState)
+  const [isLoading, setIsLoading] = useState(false)
+  const [categorySubs, setCategorySubs] = useState([])
+  const [showSub, setShowSub] = useState(false)
   const [arrayOfSubs, setArrayOfSubs] = useState([])
-
+  const [selectedCategory, setSelectedCategory] = useState('')
+  const [values, setValues] = useState(initialState)
   const [arrayOfAuthors, setArrayOfAuthors] = useState([])
   const [categories, setCategories] = useState([])
-  // const [selectedCategory, setSelectedCategory] = useState('')
-  // const [selectedSupplier, setSelectedSupplier] = useState('')
   const [authors, setAuthors] = useState([])
   const [suppliers, setSuppliers] = useState([])
-  const [categorySubs, setCategorySubs] = useState([])
-  const [showSub] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
-
-  const { slug } = match.params
-
+  const history = useHistory()
+  // router
+  const { slug } = useParams()
   useEffect(() => {
     loadProduct()
-
     loadCategories()
     loadAuthors()
     loadSuppliers()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-  useEffect(() => {
-    form.setFieldsValue({
-      title: product ? product.title : '',
-      description: (product && product.description) || '',
-      price: (product && product.price) || '',
-      sale: (product && product.sale) || '',
-      quantity: (product && product.quantity) || '',
-      layout: (product && product.layout) || '',
-      // language: (product && product.language) || '',
-      category: (product && product.category?.name) || '',
-      pages: (product && product.pages) || '',
-      publisher: (product && product.publisher) || '',
-      publication: (product && moment(product.publication)) || '',
-      supplier: (product && product.supplier?.name) || '',
-      // category: (product && product.category?.name) || '',
-    })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [product])
-
-  // const loadValues = () => {}
-  const loadProduct = () => {
-    getProduct(slug).then((p) => {
-      // 1 load single proudct
-      setProduct({ ...product, ...p.data.product })
-
-      // 2 load single product category subs
-      getCategorySubs(p.data.product.category._id).then((res) => {
-        setCategorySubs(res.data.subs) // on first load, show default subs
-      })
-      // 3 prepare array of sub ids to show as default sub product in antd Select
-
-      let arr = []
-      let arrAuthors = []
-      p.data.product.subs.map((s) => {
-        return arr.push(s._id)
-      })
-      setArrayOfSubs((prev) => arr) // required for ant design select to work
-      p.data.product.author.map((s) => {
-        return arrAuthors.push(s._id)
-      })
-      setArrayOfAuthors((prev) => arrAuthors)
-    }) // required for ant design select to work
-  }
-
   const loadCategories = () =>
     getCategories().then((c) => {
       setCategories(c.data.categories)
@@ -112,151 +69,141 @@ const UpdateProductss = ({ match }) => {
   const loadSuppliers = () =>
     getSuppliers().then((c) => setSuppliers(c.data.suppliers))
 
-  function onFinish(value) {
-    // setIsLoading(true)
-    const productUpdate = {
-      ...product,
-      subs: arrayOfSubs,
-      author: arrayOfAuthors,
-      publication: value['publication']
-        ? value['publication'].format('DD-MM-YYYY')
-        : null,
-      ...value,
-    }
-
-    // updateProducts(slug, productUpdate)
-    //   .then((res) => {
-    //     setIsLoading(false)
-    //     toast.success(`Cập nhật ${res.data.product.title} thành công`)
-    //     history.push('/admin/list-products')
-    //   })
-    //   .catch((err) => {
-    //     setIsLoading(false)
-    //     toast.error(err.response.data.error)
-    //   })
+  const loadProduct = () => {
+    getProduct(slug).then((p) => {
+      // console.log("single product", p);
+      // 1 load single proudct
+      setValues({ ...values, ...p.data.product })
+      // 2 load single product category subs
+      getCategorySubs(p.data.product.category._id).then((res) => {
+        setCategorySubs(res.data.subs) // on first load, show default subs
+      })
+      // 3 prepare array of sub ids to show as default sub values in antd Select
+      let arr = []
+      let arrAuthors = []
+      p.data.product.subs.map((s) => {
+        arr.push(s._id)
+      })
+      setArrayOfSubs((prev) => arr) // required for ant design select to work
+      p.data.product.author.map((s) => {
+        return arrAuthors.push(s._id)
+      })
+      setArrayOfAuthors((prev) => arrAuthors)
+    })
   }
-  // // Sub category Select
-  function onChange(value) {}
-  // function onChangeSupplier(value) {
-  //   setSelectedSupplier(value)
-  // }
-  function onChangeCategory(_id) {
-    // setSelectedCategory(_id)
-    getCategorySubs(_id).then((res) => {
+
+  function handleChange(e) {
+    setValues({ ...values, [e.target.name]: e.target.value })
+  }
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    setIsLoading(true)
+
+    values.subs = arrayOfSubs
+    values.author = arrayOfAuthors
+    values.category = selectedCategory ? selectedCategory : values.category
+    let valuexxxx = { ...values, totalQuantity: values['quantity'] }
+    updateProducts(slug, valuexxxx)
+      .then((res) => {
+        setIsLoading(false)
+        toast.success(`Cập nhật ${res.data.product.title} thành công`)
+        history.push('/admin/list-products')
+      })
+      .catch((err) => {
+        console.log(err)
+        setIsLoading(false)
+        toast.error(err.response.data.err)
+      })
+  }
+  const onChangeCategory = (e) => {
+    e.preventDefault()
+    setValues({ ...values, subs: [] })
+
+    setSelectedCategory(e.target.value)
+
+    getCategorySubs(e.target.value).then((res) => {
       setCategorySubs(res.data.subs)
     })
-    setProduct({ ...product, subs: [] })
-    // if (product.category._id === _id) {
-    //   loadProduct()
-    // }
-    // setArrayOfSubs([])
+    // if user clicks back to the original category
+    // show its sub categories in default
+    if (values.category._id === e.target.value) {
+      loadProduct()
+    }
+    // clear old sub category ids
+    setArrayOfSubs([])
   }
 
   return (
     <React.Fragment>
-      <Row>
-        <Col xs={24} sm={24} md={5} lg={5}>
-          <AdminSideBar />
-        </Col>
-        <Col xs={24} sm={24} md={19} lg={19}>
-          <div className="product">
-            {isLoading ? (
-              <Space size="middle">
-                <Spin size="large" />
-              </Space>
-            ) : (
-              <h3> Cập nhật sản phẩm</h3>
-            )}
-            <Form
-              {...layout}
-              form={form}
-              onFinish={onFinish}
-              // fields={[
-              //   {
-              //     name: ['title'],
-              //     value: product.title,
-              //   },
-              //   {
-              //     name: ['description'],
-              //     value: product.description,
-              //   },
-              //   {
-              //     name: ['category'],
-              //     value: selectedCategory
-              //       ? selectedCategory
-              //       : product.category._id,
-              //   },
-              //   {
-              //     name: ['shipping'],
-              //     value: product.shipping,
-              //   },
-              //   {
-              //     name: ['quantity'],
-              //     value: product.quantity,
-              //   },
-              //   {
-              //     name: ['pages'],
-              //     value: product.pages,
-              //   },
-              //   // {
-              //   //   name: ['supplier'],
-              //   //   value: selectedSupplier
-              //   //     ? selectedSupplier
-              //   //     : product.supplier.name,
-              //   // },
-              //   {
-              //     name: ['publisher'],
-              //     value: product.publisher,
-              //   },
-              //   {
-              //     name: ['publication'],
-              //     value: moment(product.publication),
-              //   },
-              //   {
-              //     name: ['layout'],
-              //     value: product.layout,
-              //   },
-              //   {
-              //     name: ['language'],
-              //     value: product.language,
-              //   },
-              //   {
-              //     name: ['price'],
-              //     value: product.price,
-              //   },
-              // ]}
-            >
-              <div className="product__form">
-                <FileUpload
-                  setIsLoading={setIsLoading}
-                  product={product}
-                  setProduct={setProduct}
-                />
-                <FormUpdateProduct
-                  product={product}
-                  onChange={onChange}
-                  onChangeCategory={onChangeCategory}
-                  // onChangeSupplier={onChangeSupplier}
-                  categorySubss={categorySubs}
-                  showSub={showSub}
-                  setProduct={setProduct}
-                  arrayOfSubs={arrayOfSubs}
-                  arrayOfAuthors={arrayOfAuthors}
-                  suppliers={suppliers}
-                  categories={categories}
-                  authors={authors}
-                  setArrayOfSubs={setArrayOfSubs}
-                  setArrayOfAuthors={setArrayOfAuthors}
-                />
-              </div>
-            </Form>
+      {/* <ModalConfirm
+        showModal={showModal}
+        closeModal={closeModal}
+        onHandleDeleteItem={onHandleDeleteItem}
+        title="danh mục"
+        categoryToDelete={categoryToDelete}
+      /> */}
+
+      <Layouts>
+        <SectionTitle>Sản phẩm</SectionTitle>
+        <div className="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
+          {isLoading ? (
+            <Space size="middle">
+              <Spin size="large" />
+            </Space>
+          ) : (
+            <h3 className="text-sm text-gray-600 pb-2"> Tạo mới sản phẩm</h3>
+          )}
+
+          <div className="p-3">
+            <FileUpload
+              setIsLoading={setIsLoading}
+              values={values}
+              setValues={setValues}
+            />
           </div>
-        </Col>
-      </Row>
+          <FormUpdateProduct
+            handleSubmit={handleSubmit}
+            handleChange={handleChange}
+            setValues={setValues}
+            values={values}
+            onChangeCategory={onChangeCategory}
+            categories={categories}
+            categorySubss={categorySubs}
+            showSub={showSub}
+            authors={authors}
+            suppliers={suppliers}
+            arrayOfSubs={arrayOfSubs}
+            arrayOfAuthors={arrayOfAuthors}
+            setArrayOfSubs={setArrayOfSubs}
+            setArrayOfAuthors={setArrayOfAuthors}
+            selectedCategory={selectedCategory}
+          />
+
+          {/* <Form {...layout} form={form} onFinish={onFinish}>
+            <div className="product__form">
+              <FileUpload
+                setIsLoading={setIsLoading}
+                product={product}
+                setProduct={setProduct}
+              />
+              <FormCreateProduct
+                product={product}
+                onChange={onChange}
+                onChangeCategory={onChangeCategory}
+                categorySubss={categorySubs}
+                showSub={showSub}
+                setProduct={setProduct}
+                authors={authors}
+                suppliers={suppliers}
+              />
+            </div>
+          </Form> */}
+        </div>
+      </Layouts>
     </React.Fragment>
   )
 }
 
-UpdateProductss.propTypes = {}
+CreateProducts.propTypes = {}
 
-export default UpdateProductss
+export default CreateProducts

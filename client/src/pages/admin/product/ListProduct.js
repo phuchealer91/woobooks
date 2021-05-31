@@ -65,11 +65,12 @@ const ListProduct = () => {
     products?.filter(searched(keyword)).map((item) => ({
       Id: item._id.substring(0, 10),
       Title: item.title,
+      Slug: item.slug,
       Sold: item.sold,
       Price: item.price,
       Sale: item.sale,
       Author: item.author,
-      Image: item.images[0] ? item.images[0].url : imageDefault,
+      Image: item.images[1] ? item.images[1].url : imageDefault,
       Quantity: item.quantity,
     }))
   const columns = [

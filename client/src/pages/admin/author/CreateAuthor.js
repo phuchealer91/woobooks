@@ -25,8 +25,6 @@ const CreateAuthor = () => {
   const [authorToDelete, setAuthorToDelete] = useState('')
   const [bio, setBio] = useState('')
   const [keyword, setKeyword] = useState('')
-
-  // const categories = useSelector((state) => state.category.listCategories)
   const totalAuthor = authors.length
 
   useEffect(() => {
@@ -84,7 +82,7 @@ const CreateAuthor = () => {
   const dataSource =
     authors &&
     authors.filter(searched(keyword)).map((item) => ({
-      Id: item._id,
+      Id: item._id.substring(0, 10),
       Name: item.name,
       Slug: item.slug,
     }))

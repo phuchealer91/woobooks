@@ -80,7 +80,7 @@ const Info = () => {
                   <h2 className="mb-0 text-base pt-2 font-bold text-gray-600">
                     {item.name}
                   </h2>
-                  <p className="mb-0 w-48 text-xs text-gray-400">9,416 Posts</p>
+                  {/* <p className="mb-0 w-48 text-xs text-gray-400">9,416 Posts</p> */}
                 </div>
               </div>
               <hr className="border-gray-800" />

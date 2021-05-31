@@ -23,6 +23,7 @@ import { Spin } from 'antd'
 import MessengerCustomerChat from 'react-messenger-customer-chat'
 import { getSuggestions } from '../redux/actions/suggestions'
 import ConversationBot from '../ConversationBot'
+import axios from 'axios'
 
 const Addressx = lazy(() => import('../pages/address'))
 const DashBoard = lazy(() => import('../pages/admin/DashBoard'))
@@ -103,18 +104,21 @@ function App() {
       if (!user) {
         return
       }
+      // dispatch({
+      //   type: 'NOTIFY',
+      //   payload: { loading: true },
+      // })
       const token = await user.getIdToken()
       window.localStorage.setItem('token', token)
       try {
-        await currentUsers().then((res) => {
-          const data = {
-            token,
-            userDatas: res.data,
-            notificationsCount: res.data.notifications.newNotifications,
-          }
+        await currentUsers(token).then((res) => {
           dispatch({
             type: 'LOGGIN_IN_USER',
-            payload: data,
+            payload: {
+              token,
+              userDatas: res.data,
+              notificationsCount: res.data.notifications.newNotifications,
+            },
           })
           // dispatch({
           //   type: 'NOTIFY',

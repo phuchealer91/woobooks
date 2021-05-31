@@ -48,15 +48,15 @@ const Login = (props) => {
     try {
       const result = await auth.signInWithEmailAndPassword(email, password)
       const { user } = result
-      const idTokenUser = await user.getIdTokenResult()
-      window.localStorage.setItem('token', idTokenUser.token)
-      registerOrUpdateUsers(idTokenUser.token).then((res) => {
+      const token = await user.getIdToken()
+      window.localStorage.setItem('token', token)
+      registerOrUpdateUsers(token).then((res) => {
         if (res.data) {
           const data = {
             name: user.displayName,
             email: user.email,
             photoURL: user.photoURL,
-            token: idTokenUser.token,
+            token: token,
             userDatas: res.data,
             notificationsCount: res.data.notifications.newNotifications,
             role: res.data.role,
@@ -80,16 +80,16 @@ const Login = (props) => {
       .signInWithPopup(googleAuthProvider)
       .then(async (result) => {
         const { user } = result
-        const idTokenUser = await user.getIdTokenResult()
-        window.localStorage.setItem('token', idTokenUser.token)
+        const token = await user.getIdToken()
+        window.localStorage.setItem('token', token)
         dispatch(notify(true))
-        registerOrUpdateUsers(idTokenUser.token).then((res) => {
+        registerOrUpdateUsers(token).then((res) => {
           if (res.data) {
             const data = {
               name: res.data.name,
               email: res.data.email,
               photoURL: res.data.photoURL,
-              token: idTokenUser.token,
+              token: token,
               userDatas: res.data,
               notificationsCount: res.data.notifications.newNotifications,
               role: res.data.role,

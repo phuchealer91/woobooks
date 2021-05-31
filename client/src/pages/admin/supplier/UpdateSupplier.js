@@ -1,5 +1,6 @@
-import { Form } from 'antd'
+import { Button, Form } from 'antd'
 import React, { useEffect, useState } from 'react'
+import ReactQuill from 'react-quill'
 import { useHistory } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { getSupplier, updateSuppliers } from '../../../apis/supplier'
@@ -11,6 +12,7 @@ import './Suppliers.scss'
 const UpdateSupplier = ({ match }) => {
   const [form] = Form.useForm()
   const history = useHistory()
+  const [bios, setBios] = useState('')
   const [name, setName] = useState('')
   // const [loading, setLoading] = useState(false)
 
@@ -20,12 +22,16 @@ const UpdateSupplier = ({ match }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   const loadSupplier = () =>
-    getSupplier(slug).then((au) => setName(au.data.supplier.name))
+    getSupplier(slug).then((au) => {
+      setName(au.data.supplier.name)
+      setBios(au.data.supplier.bio)
+    })
   function onFinish({ name }) {
-    updateSuppliers(slug, { name })
+    updateSuppliers(slug, { name, bio: bios })
       .then((res) => {
         // setLoading(false)
         setName('')
+        setBios('')
         toast.success(`Cập nhật '${res.data.supplier.name}' thành công `)
         history.push('/admin/supplier')
       })
@@ -36,7 +42,9 @@ const UpdateSupplier = ({ match }) => {
           toast.error(error.response.data.error)
       })
   }
-
+  function onHandleChanges(value) {
+    setBios(value)
+  }
   return (
     <React.Fragment>
       <Layouts>
@@ -54,6 +62,21 @@ const UpdateSupplier = ({ match }) => {
             ]}
           >
             <FormSupplier />
+            <div className="pb-2 -mt-2">Thông tin của nhà cung cấp</div>
+            <ReactQuill
+              value={bios}
+              onChange={onHandleChanges}
+              placeholder="Điền thông tin của nhà cung cấp"
+              className="mb-3"
+            />
+            <Button
+              htmlType="submit"
+              type="primary"
+              size="large"
+              className="py-2 rounded font-semibold"
+            >
+              Thêm
+            </Button>
           </Form>
         </div>
       </Layouts>

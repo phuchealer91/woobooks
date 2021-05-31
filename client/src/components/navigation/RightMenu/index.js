@@ -32,9 +32,15 @@ function RightMenu() {
               ) : (
                 <div className="py-4">
                   {suggestions.users.map((userx) => (
-                    <div className="flex items-center flex-shrink-0">
+                    <div
+                      className="flex items-center flex-shrink-0"
+                      key={userx._id}
+                    >
                       <div className="flex-1 ">
-                        <Link className="py-2 flex items-center w-full no-underline hover:underline">
+                        <Link
+                          to={`/community/profile/${userx._id}`}
+                          className="py-2 flex items-center w-full no-underline hover:underline"
+                        >
                           <div>
                             <img
                               className="inline-block h-8 w-8 rounded-full ml-4 mt-2"

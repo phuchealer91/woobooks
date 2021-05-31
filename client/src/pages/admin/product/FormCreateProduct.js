@@ -5,6 +5,7 @@ import React from 'react'
 const { Option } = Select
 
 const FormCreateProduct = ({
+  handleChange,
   onChange,
   onSearch,
   product,
@@ -16,11 +17,278 @@ const FormCreateProduct = ({
   suppliers,
   authors,
   setProduct,
+  handleSubmit,
+  values,
+  setValues,
 }) => {
-  const { languages, layouts, categories, subs, author } = product
+  // const { languages, layouts, categories, subs, author } = product
+  const {
+    title,
+    description,
+    price,
+    categories,
+    category,
+    subs,
+    sale,
+    quantity,
+    totalQuantity,
+    pages,
+    author,
+    supplier,
+    publisher,
+    publication,
+    images,
+    layouts,
+    languages,
+    layout,
+    lang,
+  } = values
   return (
     <React.Fragment>
-      <Form.Item
+      <form onSubmit={handleSubmit} className="mx-0 w-full">
+        <div className="my-5 px-4">
+          <div className="my-2 flex items-center justify-between">
+            <span>Tiêu đề sách</span>
+            <input
+              type="text"
+              name="title"
+              value={title}
+              onChange={handleChange}
+              placeholder="Nhập tiêu đề sách"
+              className="ml-2 py-2 w-align border px-3 text-grey-darkest rounded"
+              required
+            />
+          </div>
+          <div className="my-2 flex items-center justify-between">
+            <span>Tóm tắt sách</span>
+            <input
+              type="text"
+              name="description"
+              value={description}
+              onChange={handleChange}
+              placeholder="Nhập tóm tắt sách"
+              className="ml-2 py-2 w-align border px-3 text-grey-darkest rounded"
+              required
+            />
+          </div>
+          <div className="my-2 flex items-center justify-between">
+            <span>Số trang</span>
+            <input
+              type="number"
+              name="pages"
+              value={pages}
+              onChange={handleChange}
+              placeholder="Nhập số trang sách"
+              className="ml-2 py-2 w-align border px-3 text-grey-darkest rounded"
+              required
+            />
+          </div>
+          <div className="my-2 flex items-center justify-between">
+            <span>Nhà sản xuất</span>
+            <input
+              type="text"
+              name="publisher"
+              value={publisher}
+              onChange={handleChange}
+              placeholder="Nhập tên nhà sản xuất"
+              className="ml-2 py-2 w-align border px-3 text-grey-darkest rounded"
+              required
+            />
+          </div>
+          <div className="my-2 flex items-center justify-between">
+            <span>Ngày xuất bản</span>
+            <input
+              type="date"
+              name="publication"
+              value={publication}
+              onChange={handleChange}
+              placeholder="Nhập ngày xuất bản"
+              className="ml-2 py-2 w-align border px-3 text-grey-darkest rounded"
+              required
+            />
+          </div>
+          <div className="my-2 flex items-center justify-between">
+            <span>Giá sách</span>
+            <input
+              type="number"
+              name="price"
+              value={price}
+              onChange={handleChange}
+              placeholder="Nhập giá sách"
+              className="ml-2 py-2 w-align border px-3 text-grey-darkest rounded"
+              required
+            />
+          </div>
+          <div className="my-2 flex items-center justify-between">
+            <span>Số lượng</span>
+            <input
+              type="number"
+              name="quantity"
+              value={quantity}
+              onChange={handleChange}
+              placeholder="Nhập số lượng sách"
+              className="ml-2 py-2 w-align border px-3 text-grey-darkest rounded"
+            />
+          </div>
+
+          <div className="my-2 flex items-center justify-between">
+            <span>Giảm giá</span>
+            <input
+              type="number"
+              name="sale"
+              value={sale}
+              onChange={handleChange}
+              placeholder="Nhập số phần trăm giảm"
+              className="ml-2 py-2 w-align border px-3 text-grey-darkest rounded"
+            />
+          </div>
+          <div className="my-2 flex items-center justify-between">
+            <span>Hình thức</span>
+            <select
+              type="select"
+              name="layout"
+              placeholder="Chọn hình thức sách"
+              className="ml-2 py-2 w-align border px-3 text-grey-darkest rounded"
+              value={layout}
+              defaultValue="Chọn hình thức sách"
+              onChange={handleChange}
+              required
+            >
+              <option value="">Chọn hình thức sách</option>
+              {layouts &&
+                layouts.map((lay, idx) => {
+                  return (
+                    <option key={idx} value={lay}>
+                      {lay}
+                    </option>
+                  )
+                })}
+            </select>
+          </div>
+          <div className="my-2 flex items-center justify-between">
+            <span>Ngôn ngữ</span>
+            <select
+              type="select"
+              name="lang"
+              placeholder="Chọn ngôn ngữ"
+              className="ml-2 py-2 w-align border px-3 text-grey-darkest rounded"
+              value={lang}
+              defaultValue="Chọn ngôn ngữ"
+              onChange={handleChange}
+              required
+            >
+              <option value="">Chọn ngôn ngữ</option>
+              {languages &&
+                languages.map((lan, idx) => {
+                  return (
+                    <option key={idx} value={lan}>
+                      {lan}
+                    </option>
+                  )
+                })}
+            </select>
+          </div>
+          <div className="my-2 flex items-center justify-between">
+            <span>Nhà cung cấp</span>
+            <select
+              type="select"
+              name="supplier"
+              placeholder="Chọn nhà cung cấp"
+              className="ml-2 py-2 w-align border px-3 text-grey-darkest rounded"
+              value={supplier}
+              defaultValue="Chọn nhà cung cấp"
+              onChange={handleChange}
+              required
+            >
+              <option value="">Chọn nhà cung cấp</option>
+              {suppliers &&
+                suppliers.map((sup, idx) => {
+                  return (
+                    <option key={sup._id} value={sup._id}>
+                      {sup.name}
+                    </option>
+                  )
+                })}
+            </select>
+          </div>
+          <div className="my-2 flex items-center justify-between">
+            <span>Tác giả</span>
+            <Select
+              mode="multiple"
+              placeholder="Chọn tác giả"
+              className="ml-2 w-align"
+              style={{ borderRadius: '4px', padding: '8px 0' }}
+              defaultValue="Chọn tác giả"
+              value={author}
+              onChange={(value) => setValues({ ...values, author: value })}
+              required
+            >
+              {authors.length &&
+                authors.map((cs, idx) => {
+                  return (
+                    <Option key={cs._id} value={cs._id}>
+                      {cs.name}
+                    </Option>
+                  )
+                })}
+            </Select>
+          </div>
+          <div className="my-2 flex items-center justify-between">
+            <span>Danh mục</span>
+            <select
+              type="select"
+              name="category"
+              placeholder="Chọn danh mục sách"
+              className="ml-2 py-2 w-align border px-3 text-grey-darkest rounded"
+              value={category}
+              defaultValue="Chọn danh mục sách"
+              onChange={onChangeCategory}
+              required
+            >
+              <option value="">Chọn danh mục sách</option>
+              {categories &&
+                categories.map((ca, idx) => {
+                  return (
+                    <option key={ca._id} value={ca._id}>
+                      {ca.name}
+                    </option>
+                  )
+                })}
+            </select>
+          </div>
+          {showSub ? (
+            <div className="my-2 flex items-center justify-between">
+              <span>Chọn loại sách</span>
+              <Select
+                mode="multiple"
+                placeholder="Chọn loại sách"
+                className="ml-2 w-align"
+                style={{ borderRadius: '4px', padding: '8px 0' }}
+                defaultValue="Chọn loại sách"
+                value={subs}
+                onChange={(value) => setValues({ ...values, subs: value })}
+                required
+              >
+                {categorySubss.length &&
+                  categorySubss.map((cs, idx) => {
+                    return (
+                      <Option key={cs._id} value={cs._id}>
+                        {cs.name}
+                      </Option>
+                    )
+                  })}
+              </Select>
+            </div>
+          ) : null}
+        </div>
+        <button
+          className="text-white font-semibold bg-blue-500 hover:bg-blue-600 w-1/4 px-4 py-2 rounded"
+          type="submit"
+        >
+          Lưu
+        </button>
+      </form>
+      {/* <Form.Item
         rules={[
           {
             required: false,
@@ -311,7 +579,7 @@ const FormCreateProduct = ({
         className="py-2 rounded font-semibold"
       >
         Thêm
-      </Button>
+      </Button> */}
     </React.Fragment>
   )
 }

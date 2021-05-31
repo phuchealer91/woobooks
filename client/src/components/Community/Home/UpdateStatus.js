@@ -118,8 +118,8 @@ function UpdateStatus() {
         confirmLoading={confirmLoading}
         onCancel={handleCancelEdit}
         width="600px"
-        bodyStyle={{ backgroundColor: '#15202B' }}
-        style={{ backgroundColor: '#15202B' }}
+        bodyStyle={{ backgroundColor: '#fff' }}
+        style={{ backgroundColor: '#fff' }}
         footer={null}
       >
         <form onSubmit={onHandleSubmitEdit}>
@@ -134,7 +134,7 @@ function UpdateStatus() {
             <div className="flex-1 px-2 pt-2 mt-2">
               <div>
                 <textarea
-                  className=" bg-transparent  font-medium text-base w-full text-white"
+                  className=" bg-transparent  font-medium text-base w-full text-gray-600"
                   rows={2}
                   cols={50}
                   name="content"
@@ -158,7 +158,7 @@ function UpdateStatus() {
                       />
                       <span
                         onClick={() => onHandleDeleteEdit(idx)}
-                        className="w-8 h-8 rounded-full transition-all bg-white shadow-md border border-gray-400 relative right-10 -top-16 cursor-pointer hover:bg-blue-500 hover:text-white"
+                        className="w-8 h-8 rounded-full transition-all bg-white shadow-md border border-gray-400 relative right-10 -top-16 cursor-pointer hover:bg-blue-500 hover:text-gray-600"
                       >
                         <CloseOutlined
                           className="grid place-items-center h-full"
@@ -179,7 +179,7 @@ function UpdateStatus() {
                       />
                       <span
                         onClick={onHandleStopStreamEdit}
-                        className="w-8 h-8 px-2 rounded-full transition-all bg-white shadow-md border border-gray-400 relative right-10 -top-24 cursor-pointer hover:bg-blue-500 hover:text-white"
+                        className="w-8 h-8 px-2 rounded-full transition-all bg-white shadow-md border border-gray-400 relative right-10 -top-24 cursor-pointer hover:bg-blue-500 hover:text-gray-600"
                       >
                         <CloseOutlined
                           className="grid place-items-center h-full w-full"
@@ -312,7 +312,7 @@ function UpdateStatus() {
             <div className="flex-1">
               <button
                 type="submit"
-                className="bg-blue-400 hover:bg-blue-500 mt-5 text-white font-bold py-2 px-8 rounded-full mr-8 float-right"
+                className="bg-blue-400 hover:bg-blue-500 mt-5 text-gray-600 font-bold py-2 px-8 rounded-full mr-8 float-right"
               >
                 Cập nhật
               </button>

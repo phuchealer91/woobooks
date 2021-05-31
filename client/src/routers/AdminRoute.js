@@ -1,12 +1,13 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Route } from 'react-router-dom'
 import LoadingRoute from './LoadingRoute'
 
 const AdminRoute = ({ children, ...rest }) => {
   const { user } = useSelector((state) => ({ ...state }))
   const [isAdmin, setIsAdmin] = useState(false)
+  const dispatch = useDispatch()
 
   useEffect(() => {
     if (user && user.token) {
@@ -14,7 +15,11 @@ const AdminRoute = ({ children, ...rest }) => {
         .post(
           'http://localhost:8000/api/auth/current-admin',
           {},
-          { headers: { authorization: user.token } }
+          {
+            headers: {
+              authorization: window.localStorage.getItem('token') || user.token,
+            },
+          }
         )
         .then((res) => {
           setIsAdmin(true)

@@ -4,7 +4,7 @@ const slugify = require('slugify')
 var { validationResult } = require('express-validator')
 // const Product = require('../models/product.model')
 module.exports.createSupplier = async (req, res) => {
-  const { name } = req.body
+  const { name, bio } = req.body
   const slug = slugify(name).toLowerCase()
   try {
     const errors = validationResult(req)
@@ -17,6 +17,7 @@ module.exports.createSupplier = async (req, res) => {
     const newSupplier = new Supplier({
       name,
       slug,
+      bio,
     })
     await newSupplier.save()
     return res.status(201).json({ supplier: newSupplier })
@@ -50,13 +51,13 @@ module.exports.getSuppliers = async (req, res) => {
   }
 }
 module.exports.updateSupplier = async (req, res) => {
-  const { name } = req.body
+  const { name, bio } = req.body
   const { slug } = req.params
   const slugUpdate = slugify(name).toLowerCase()
   try {
     const supplier = await Supplier.findOneAndUpdate(
       { slug: slug },
-      { name, slug: slugUpdate },
+      { name, slug: slugUpdate, bio },
       { new: true }
     )
     if (!supplier)

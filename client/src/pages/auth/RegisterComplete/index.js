@@ -46,16 +46,15 @@ const RegisterComplete = (props) => {
       let user = auth.currentUser
       // await user.updateProfile({ displayName: name })
       await user.updatePassword(password)
-      const idTokenUser = await user.getIdTokenResult()
-      // const { token } = idTokenUser
-      // save email & token with redux store
-      registerOrUpdateUsers(idTokenUser.token).then((res) => {
+      const token = await user.getIdToken()
+      // const { token } =       // save email & token with redux store
+      registerOrUpdateUsers(token).then((res) => {
         if (res.data) {
           const data = {
             name: res.data.name,
             email: res.data.email,
             photoURL: res.data.photoURL,
-            token: idTokenUser.token,
+            token: token,
             userDatas: res.data,
             notificationsCount: res.data.notifications.newNotifications,
             role: res.data.role,

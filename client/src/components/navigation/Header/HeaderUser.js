@@ -239,64 +239,7 @@ const HeaderUser = () => {
             </div>
           </div>
         </div>
-        <nav className="panel-menu fixed inset-y-0 left-0 bg-white">
-          <ul className="absolute inset-0 py-6 mn1 panel-menu__list">
-            <li className="cursor-pointer pb-4 pl-6 panel-menu__close">
-              <i className="fal fa-times" />
-              <span className="ml-1">Close</span>
-            </li>
-            <li className="mt-5 flex items-center pl-6 pr-7 cursor-pointer group">
-              <Link
-                to="/"
-                className="uppercase font-light text-sm text-black group-hover:text-blue-600"
-              >
-                home
-              </Link>
-            </li>
-            <li className="mt-5 flex items-center pl-6 pr-7 cursor-pointer group">
-              <Link
-                to="/"
-                className="uppercase font-light text-sm text-black group-hover:text-blue-600"
-              >
-                shop
-              </Link>
-            </li>
-            <li className="mt-5 flex items-center pl-6 pr-7 cursor-pointer group">
-              <Link
-                to="/"
-                className="uppercase font-light text-sm text-black group-hover:text-blue-600"
-              >
-                pages
-              </Link>
-            </li>
-            <li className="mt-5 flex items-center pl-6 pr-7 cursor-pointer group">
-              <Link
-                to="/"
-                className="uppercase font-light text-sm text-black group-hover:text-blue-600"
-              >
-                blog
-              </Link>
-            </li>
-            <li className="mt-5 flex items-center pl-6 pr-7 cursor-pointer group panel-menu__item">
-              <a
-                href="#mn2"
-                className="uppercase font-light text-sm text-black group-hover:text-blue-600 inline-flex items-center justify-between w-full"
-              >
-                Sách trong nước
-                <i className="fal fa-angle-right text-xl font-light group-hover:text-blue-600" />
-              </a>
-            </li>
-            {/* <li className="mt-5 flex items-center pl-6 pr-7 cursor-pointer group panel-menu__item">
-              <a
-                href="#mn2"
-                className="uppercase font-light text-sm text-black group-hover:text-blue-600 inline-flex items-center justify-between w-full"
-              >
-                Sách nước ngoài
-                <i className="fal fa-angle-right text-xl font-light group-hover:text-blue-600" />
-              </a>
-            </li> */}
-          </ul>
-        </nav>
+
         {/* hello main*/}
       </header>
     </>

@@ -48,9 +48,7 @@ const ListProduct = () => {
         setShowModal(false)
       })
       .catch((err) => {
-        if (err.response.status === 400) {
-          toast.error(err.response.data.error)
-        }
+        toast.error('Xóa sản phẩm thất bại !')
         setShowModal(false)
       })
   }

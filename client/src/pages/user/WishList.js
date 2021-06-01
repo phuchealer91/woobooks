@@ -55,8 +55,8 @@ function WishList(props) {
                       <div className="w-20 mx-auto sm:mx-0 relative sm:mr-3 sm:pr-0">
                         <div className="aspect-w-1 aspect-h-1 w-full">
                           <img
-                            src={w ? w.images[0].url : ''}
-                            alt={w.images[0].url}
+                            src={w ? w.images[1].url : ''}
+                            alt={w.images[1].url}
                             className="object-cover"
                           />
                         </div>

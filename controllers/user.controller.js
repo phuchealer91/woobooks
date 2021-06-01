@@ -6,6 +6,8 @@ const Order = require('../models/order.model')
 const Log = require('../models/log.model')
 const Receipt = require('../models/receipt.model')
 const socketIO = require('../io')
+const { v4: uuidv4 } = require('uuid')
+
 module.exports.userCart = async (req, res) => {
   const { cartLists: cart } = req.body
   let products = []
@@ -158,6 +160,93 @@ module.exports.createOrder = async (req, res) => {
     })
     await log.save()
     // TODO: push notification
+    const orderByUser = await User.findById(
+      '607b2755309a774a98eaaee1',
+      'notifications'
+    )
+    orderByUser.notifications.newNotifications++
+    orderByUser.notifications.list.push({ logId: log })
+    await orderByUser.save()
+
+    io.emit('create order', {
+      user: userOrder,
+      orderId: newOrder._id,
+      content: newOrder,
+    })
+    return res.status(200).json({ order: newOrder })
+  } catch (error) {
+    console.log('error', error)
+    return res.status(500).json({ Error: 'Server error' })
+  }
+}
+module.exports.createCashOrder = async (req, res) => {
+  try {
+    const { COD, isCoupons } = req.body
+    if (!COD) return res.status(400).send('Tạo giao hàng trực tiếp thất bại !')
+    const user = await User.findOne({ email: req.user.email }).exec()
+    const {
+      products,
+      deliveryAddress,
+      applyCoupon,
+      totalAfterDiscount,
+      cartTotal,
+    } = await Cart.findOne({
+      orderedBy: user._id,
+    }).exec()
+    let totalCurrent = 0
+    if (isCoupons && totalAfterDiscount) {
+      totalCurrent = Math.round(
+        (totalAfterDiscount + deliveryAddress.feeShip) / 100
+      )
+    } else {
+      totalCurrent = Math.round((cartTotal + deliveryAddress.feeShip) / 100)
+    }
+    const newOrder = await new Order({
+      products,
+      paymentIntent: {
+        id: uuidv4(),
+        amount: totalCurrent,
+        currency: 'usd',
+        status: 'Giao hàng trực tiếp',
+        created: Date.now() / 1000,
+        payment_method_types: ['cash'],
+      },
+      deliveryAddress,
+      applyCoupon: applyCoupon ? applyCoupon._id : null,
+      orderedBy: user._id,
+      feeShip: deliveryAddress.feeShip,
+    }).save()
+    // increment sold, decrement quantity
+    let bulk = products.map((item) => {
+      return {
+        updateOne: {
+          filter: { _id: item.product._id },
+          update: { $inc: { quantity: -item.count, sold: +item.count } },
+        },
+      }
+    })
+    // SD bulkWrite (Thực hiện nhiều thao tác)
+    await Product.bulkWrite(bulk, {})
+    const userOrder = await User.findById(user._id, 'name email photoURL')
+    const io = socketIO.getIO()
+    // io.emit('update order', {
+    //   orderedBy: userOrder,
+    //   newOrder,
+    // })
+    // TODO: Ghi log
+    const log = new Log({
+      userId: user._id,
+      rootId: newOrder._id,
+      type: 'create order',
+    })
+    await log.save()
+    // TODO: push notification
+    // const orderByUser = await User.find(
+    //   {
+    //     _id: { $in: ['607b2755309a774a98eaaee1', '5f8f2684bc42094a801edfa6'] },
+    //   },
+    //   'notifications'
+    // )
     const orderByUser = await User.findById(
       '607b2755309a774a98eaaee1',
       'notifications'

@@ -1,8 +1,6 @@
 const admin = require('../firebase')
 const User = require('../models/user.model')
 module.exports.isAuth = async (req, res, next) => {
-  // console.log('req', req.headers)
-  // console.log('header', req.headers.authorization)
   try {
     const firebaseUser = await admin
       .auth()
@@ -10,7 +8,6 @@ module.exports.isAuth = async (req, res, next) => {
     req.user = firebaseUser
     next()
   } catch (error) {
-    console.log('loi gi the', error)
     res.status(401).json({ error: 'Invalid or expired token' })
   }
 }

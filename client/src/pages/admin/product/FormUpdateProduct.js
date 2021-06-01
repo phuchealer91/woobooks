@@ -1,6 +1,4 @@
-import { TagOutlined } from '@ant-design/icons'
-import { DatePicker, Form, Input, Select } from 'antd'
-import Button from 'antd/lib/button'
+import { Select } from 'antd'
 import moment from 'moment'
 import React from 'react'
 const { Option } = Select
@@ -201,7 +199,7 @@ const FormUpdateProduct = ({
             name="supplier"
             placeholder="Chọn nhà cung cấp"
             className="ml-2 py-2 w-align border px-3 text-grey-darkest rounded"
-            value={supplier._id}
+            value={supplier ? supplier._id : supplier}
             defaultValue="Chọn nhà cung cấp"
             onChange={handleChange}
             required

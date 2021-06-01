@@ -1,13 +1,18 @@
-import { DeleteOutlined, ExclamationCircleOutlined } from '@ant-design/icons'
+import {
+  CheckCircleOutlined,
+  DeleteOutlined,
+  ExclamationCircleOutlined,
+} from '@ant-design/icons'
 import { Modal, Tag } from 'antd'
 import React, { useEffect, useState } from 'react'
 import ModalImage from 'react-modal-image'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link, useHistory } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import {
   applyAddressCarts,
   applyCouponCarts,
+  createCashOrders,
   emptyCarts,
   getAddresss,
   getUserCarts,
@@ -21,6 +26,8 @@ import { appliedCoupon } from '../../redux/actions/coupon'
 
 function CheckOut(props) {
   const dispatch = useDispatch()
+  const { COD } = useSelector((state) => state)
+  const { isCoupons } = useSelector((state) => state.coupon)
   const [products, setProducts] = useState([])
   const [total, setTotal] = useState(0)
   // const [isSubmitAddr, setIsSubmitAddr] = useState(false)
@@ -134,7 +141,37 @@ function CheckOut(props) {
       history.push('/payment')
     }
   }
-
+  function onHandlePayMentCash() {
+    if (!addressSaved || !products.length) {
+      return toast.error('Vui lòng cập nhật địa chỉ giao hàng')
+    } else {
+      createCashOrders({ COD, isCoupons })
+        .then((res) => {
+          if (res.data.order) {
+            if (typeof window !== 'undefined') localStorage.removeItem('cart')
+          }
+          toast.success('Thanh toán thành công')
+          confirmOrder()
+          dispatch(addToCart([]))
+          dispatch(appliedCoupon(false))
+          emptyCarts()
+        })
+        .catch((error) => {
+          toast.error('Đặt hàng thất bại !')
+        })
+    }
+  }
+  function confirmOrder() {
+    Modal.confirm({
+      title: 'Xác nhận đặt hàng',
+      icon: <CheckCircleOutlined />,
+      content: 'Chúc mừng. Bạn đã đặt hàng thành công !',
+      okText: 'Xác nhận',
+      onOk: () => {
+        history.push('/user/history')
+      },
+    })
+  }
   return (
     <div>
       <div className="xl:max-w-7xl mx-auto bg-white rounded mt-4">
@@ -402,8 +439,16 @@ function CheckOut(props) {
                 Tổng Số Tiền (gồm VAT):
               </span>{' '}
               {totalAfterDiscount > 0
-                ? formatPrice(totalAfterDiscount + addressSaved?.feeShip)
-                : formatPrice(total + addressSaved?.feeShip)}
+                ? formatPrice(
+                    addressSaved?.feeShip > 0
+                      ? totalAfterDiscount + addressSaved?.feeShip
+                      : totalAfterDiscount
+                  )
+                : formatPrice(
+                    addressSaved?.feeShip > 0
+                      ? total + addressSaved?.feeShip
+                      : total
+                  )}
               đ
             </div>
           </div>
@@ -415,14 +460,40 @@ function CheckOut(props) {
             >
               Xóa đơn hàng
             </button>
-            <button
-              disabled={!addressSaved || !products.length}
-              onClick={onHandlePayMent}
-              className="btn bg-blue-600 px-3 py-3 uppercase w-1/2 md:w-1/4 mt-2 font-semibold text-white"
-            >
-              Đặt hàng
-            </button>
+            {COD ? (
+              <button
+                disabled={!addressSaved || !products.length}
+                onClick={onHandlePayMentCash}
+                className={`${
+                  !addressSaved || !products.length
+                    ? 'opacity-50'
+                    : 'opacity-100'
+                } hover:bg-blue-600 btn  bg-blue-500  px-3 py-3 uppercase w-1/2 md:w-1/4 mt-2 font-semibold text-white`}
+              >
+                Đặt hàng
+              </button>
+            ) : (
+              <button
+                disabled={!addressSaved || !products.length}
+                onClick={onHandlePayMent}
+                className={`${
+                  !addressSaved || !products.length
+                    ? 'opacity-50'
+                    : 'opacity-100'
+                } hover:bg-blue-600 btn  bg-blue-500  px-3 py-3 uppercase w-1/2 md:w-1/4 mt-2 font-semibold text-white`}
+              >
+                Đặt hàng
+              </button>
+            )}
           </div>
+          {!addressSaved || !products.length ? (
+            <div className="text-red-500 text-xs py-2 px-3 text-right">
+              Có thể bạn chưa cập nhật địa chỉ giao hàng hoặc giỏ hàng bạn rỗng
+              !
+            </div>
+          ) : (
+            ''
+          )}
         </div>
       </div>
     </div>

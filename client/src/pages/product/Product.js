@@ -7,20 +7,21 @@ import { CardItem } from '../../components/CardItem'
 import LoadingCard from '../../components/LoadingCard'
 import SingleProductRoate from '../../components/SingleProduct/SingleProductRoate'
 import { EmptyBox } from '../../helpers/icons'
+import { ReadMore } from '../../helpers/ReadMore'
 import { getRelated } from '../../redux/actions/product'
 import './Product.scss'
 const { TabPane } = Tabs
 function Product(props) {
   const dispatch = useDispatch()
   const [isLoading, setIsLoading] = useState(false)
-  const [productEditing, setProductEditing] = useState()
+  const [productEditing, setProductEditing] = useState(null)
+  const [readMore, setReadMore] = useState(false)
   const { productRelated, reviews } = useSelector((state) => state.product)
   const { slug } = useRouteMatch().params
   useEffect(() => {
     loadProduct()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [slug, reviews])
-  console.log('product', productEditing)
   const loadProduct = () => {
     getProduct(slug).then((res) => {
       if (res.data) {
@@ -100,7 +101,7 @@ function Product(props) {
                           Tên Nhà Cung Cấp{' '}
                         </th>
                         <td className="text-gray-600 w-3/4">
-                          {/* {productEditing?.supplier}{' '} */}
+                          {productEditing?.supplier?.name}{' '}
                         </td>
                       </tr>
                       <tr className="my-3">
@@ -148,10 +149,15 @@ function Product(props) {
                 </div>
                 <div className="px-0 my-2 md:px-4">
                   <div className="text-base text-gray-600 font-semibold pb-2">
-                    Thông tin ngắn về sách
+                    Tóm tắt ngắn về sách
                   </div>
                   <p>
-                    {productEditing?.description && productEditing?.description}
+                    <ReadMore
+                      data={productEditing?.description}
+                      max={100}
+                      readMore={readMore}
+                      setReadMore={setReadMore}
+                    />
                   </p>
                 </div>
               </TabPane>

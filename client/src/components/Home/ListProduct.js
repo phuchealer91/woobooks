@@ -25,7 +25,7 @@ function ListProduct(props) {
   function loadProducts() {
     // dispatch(getListProducts('createAt', 'desc', page))
     setIsLoading(true)
-    getListProductss('createAt', 'desc', page).then((res) => {
+    getListProductss(page).then((res) => {
       setListproduct(res.data.products)
       setIsLoading(false)
     })

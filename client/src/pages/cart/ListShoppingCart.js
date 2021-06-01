@@ -91,6 +91,21 @@ const ListShoppingCart = ({ cartLists }) => {
         toast.error('Lỗi thanh toán')
       })
   }
+  function onHandleCheckOutCOD() {
+    dispatch({
+      type: 'COD',
+      payload: true,
+    })
+    userCarts({ cartLists })
+      .then((res) => {
+        if (res.data.newCart) {
+          history.push('/check-out')
+        }
+      })
+      .catch((error) => {
+        toast.error('Lỗi thanh toán')
+      })
+  }
 
   return (
     <>
@@ -146,17 +161,22 @@ const ListShoppingCart = ({ cartLists }) => {
                       isCheck || !cartLists.length
                         ? 'opacity-40'
                         : 'opacity-100'
-                    } bg-blue-500 hover:bg-blue-600 transition text-white hover:text-white uppercase mx-auto w-full`}
+                    } font-semibold bg-blue-500 hover:bg-blue-600 transition text-white hover:text-white uppercase mx-auto w-full`}
                   >
-                    Thanh Toán
+                    Thanh Toán Online
                   </button>
-                  {/* <button
-                    onClick={onHandleCheckOut}
-                    disabled={!cartLists.length}
-                    className="btn btn-primary btn-addToCart uppercase mx-auto w-4/5 mt-2"
+                  <button
+                    onClick={onHandleCheckOutCOD}
+                    disabled={!cartLists.length || isCheck}
+                    className={`btn py-3 mt-2 ${
+                      isCheck || !cartLists.length
+                        ? 'opacity-40'
+                        : 'opacity-100'
+                    } font-semibold bg-green-500 hover:bg-green-600 transition text-white hover:text-white uppercase mx-auto w-full`}
                   >
-                    Thanh Toán Tiền Mặt
-                  </button> */}
+                    Thanh Toán Khi Giao Hàng
+                  </button>
+
                   {isCheck && (
                     <div className="text-red-500 text-xs mt-2">
                       Bạn đã nhập quá số lượng sản phẩm có sẵn trong kho. Vui

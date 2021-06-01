@@ -19,6 +19,7 @@ import socketReducer from './socketReducer'
 import callReducer from './callReducer'
 import peerReducer from './peerReducer'
 import suggestionsReducer from './suggestionsReducer'
+import codReducer from './CODReducer'
 
 const rootReducer = combineReducers({
   user: userReducer,
@@ -41,6 +42,7 @@ const rootReducer = combineReducers({
   call: callReducer,
   peer: peerReducer,
   suggestions: suggestionsReducer,
+  COD: codReducer,
 })
 
 export default rootReducer

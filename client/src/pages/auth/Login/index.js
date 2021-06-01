@@ -111,7 +111,7 @@ const Login = (props) => {
     <div className="min-h-screen flex flex-col items-center justify-center">
       <div className="flex flex-col bg-white shadow-md px-4 sm:px-6 md:px-8 lg:px-10 py-8 rounded-md w-full max-w-md">
         <div className="font-medium self-center text-xl sm:text-2xl uppercase text-gray-800">
-          Đăng nhập vào tài khoản của bạn
+          Đăng nhập 
         </div>
         {/* <button className="relative mt-4 border rounded-md py-2 text-sm text-gray-800 bg-gray-100 hover:bg-gray-200">
           <span className="absolute left-0 top-0 flex items-center justify-center h-full w-10 text-blue-500">

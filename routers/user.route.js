@@ -31,6 +31,7 @@ const {
   getAllUser,
   deleteUser,
   suggestionsUser,
+  createCashOrder,
 } = require('../controllers/user.controller')
 
 const { isAuth, isAdmin } = require('../middlewares/auth')
@@ -47,6 +48,7 @@ router.post('/cart/address', isAuth, applyAddressToCart)
 router.post('/cart/coupon', isAuth, applyCouponToCart)
 // order
 router.post('/cart/order', isAuth, createOrder)
+router.post('/cart/cash-order', isAuth, createCashOrder)
 router.post('/cart/orders', isAuth, getOrders)
 // get total status
 router.post('/cart/totals/status', isAuth, getTotalOrdersStatus)

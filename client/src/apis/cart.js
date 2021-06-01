@@ -28,6 +28,12 @@ export const applyAddressCarts = (data) => {
 export const createOrders = (data) => {
   return axiosServices.post(`/${PATHS.USER}/${PATHS.CART}/${PATHS.ORDER}`, data)
 }
+export const createCashOrders = (COD, isCoupons) => {
+  return axiosServices.post(
+    `/${PATHS.USER}/${PATHS.CART}/${PATHS.CASH}-${PATHS.ORDER}`,
+    { COD, isCoupons }
+  )
+}
 export const userOrders = (data) => {
   return axiosServices.post(
     `/${PATHS.USER}/${PATHS.CART}/${PATHS.ORDERS}`,

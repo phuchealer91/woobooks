@@ -114,7 +114,9 @@ function ViewOrder({ order, idx, loaduserOrder }) {
             phương thức thanh toán
           </span>
           <div className="text-sm text-gray-500 pt-3 ">
-            {order?.paymentIntent?.payment_method_types[0].toUpperCase()}
+            {order?.paymentIntent?.payment_method_types[0] === 'card'
+              ? 'Thanh toán online qua stripe'
+              : 'Thanh toán khi giao hàng'}
           </div>
         </div>
       </div>

@@ -97,14 +97,14 @@ function Home(props) {
                   Cộng đồng
                 </Link>
               </li>
-              <li className="px-4 py-2 hover:bg-blue-200 cursor-pointer transition">
+              {/* <li className="px-4 py-2 hover:bg-blue-200 cursor-pointer transition">
                 <Link
                   to="/community"
                   className="text-base color-secondar transition-all  inline-block text-gray-600 hover:text-gray-600"
                 >
                   Hỗ trợ
                 </Link>
-              </li>
+              </li> */}
             </ul>
           </div>
           <div className="w-full md:w-9/12">
@@ -115,9 +115,6 @@ function Home(props) {
         <Slider />
       </div> */}
         <section className=" mt-14">
-          <h3 className="uppercase font-medium text-center text-blue-600 text-2xl">
-            Các danh mục nổi bật
-          </h3>
           <div className="mt-10">
             <CategoryList />
           </div>

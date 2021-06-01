@@ -4,7 +4,7 @@ import _ from 'lodash'
 import React, { useEffect, useRef } from 'react'
 import 'react-image-lightbox/style.css'
 import { useDispatch } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, useRouteMatch } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import * as THREE from 'three'
 import oc from 'three-orbit-controls'
@@ -22,6 +22,7 @@ const { TabPane } = Tabs
 function SingleProductRoate({ productEditing }) {
   const dispatch = useDispatch()
   const section = useRef()
+  const { slug } = useRouteMatch().params
   const {
     title,
 
@@ -126,7 +127,6 @@ function SingleProductRoate({ productEditing }) {
 
       renderer.render(scene, camera)
     }
-
     animate()
   }, [])
 

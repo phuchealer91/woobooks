@@ -34,11 +34,7 @@ function TableOrder({ order, idx, loaduserOrder }) {
               </span>
             </div>
           </td>
-          <td className="py-3 px-6 text-left">
-            <div className="flex items-center">
-              <span>{order?.deliveryAddress?.name}</span>
-            </div>
-          </td>
+
           <td className="py-3 px-6 text-center">
             <div className="">
               {formatPriceReal(order?.paymentIntent?.amount)}đ
@@ -48,6 +44,15 @@ function TableOrder({ order, idx, loaduserOrder }) {
             <span className="">
               {new Date(order?.paymentIntent?.created * 1000).toLocaleString()}
             </span>
+          </td>
+          <td className="py-3 px-6 text-left">
+            <div className="flex items-center">
+              <span>
+                {order?.paymentIntent?.payment_method_types[0] === 'card'
+                  ? 'Thanh toán online qua STRIPE'
+                  : 'Thanh toán khi giao hàng'}
+              </span>
+            </div>
           </td>
           <td className="py-3 px-6 text-center">
             {order?.orderStatus === 'Đang chờ xác nhận' ? (

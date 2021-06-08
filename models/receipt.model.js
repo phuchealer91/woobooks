@@ -28,7 +28,7 @@ const receiptSchema = new schema(
         transaction: { type: Number },
         createdAt: {
           type: Date,
-          default: Date.now,
+          default: Date.now(),
         },
       },
     ],

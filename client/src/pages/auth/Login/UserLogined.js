@@ -137,12 +137,12 @@ const UserLogined = (props) => {
             loading={loadingNotifications}
             notifications={notifications}
             setVisibleNoti={setVisibleNoti}
-            markAsReadHandler={markAsReadHandler}
+            // markAsReadHandler={markAsReadHandler}
             className="notifications-dropdown"
             header={
               <span className="px-4 font-semibold">Thông báo đơn hàng</span>
             }
-            footer={<Link to="/thong-bao">Tất cả thông báo</Link>}
+            // footer={<Link to="/thong-bao">Tất cả thông báo</Link>}
           />
         )}
       </div>

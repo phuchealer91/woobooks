@@ -78,13 +78,21 @@ module.exports.saveUserAddress = async (req, res) => {
 
 module.exports.applyCouponToCart = async (req, res) => {
   const { coupons } = req.body
-
+  function TimeExpiry(start, end) {
+    const starts = new Date(start).getTime()
+    const ends = new Date(end).getTime()
+    const time = Math.ceil((ends - starts) / (1000 * 3600 * 24))
+    return time
+  }
   try {
     const validateCoupon = await Coupon.findOne({
       name: coupons,
-      // expiry: { $gt: new ISODate() },
     }).exec()
-    if (validateCoupon === null) {
+    console.log(TimeExpiry(validateCoupon.createdAt, validateCoupon.expiry))
+    if (
+      validateCoupon === null ||
+      TimeExpiry(validateCoupon.createdAt, validateCoupon.expiry) < 0
+    ) {
       return res.status(400).json({ Error: 'Invalid Coupon !' })
     }
     const user = await User.findOne({ email: req.user.email }).exec()
@@ -533,6 +541,7 @@ module.exports.userReceipt = async (req, res) => {
   }
   transaction.push({
     transaction: newReceipt.receiptPayment,
+    createdAt: Date.now(),
   })
 
   let newReceipts = await new Receipt({
@@ -554,6 +563,7 @@ module.exports.getUserReceipt = async (req, res) => {
       '_id title slug inQuatity inPrice images receiptTotal receiptPayment statusReceipt'
     )
     .populate('supplier')
+    .sort('-createdAt')
     .exec()
 
   return res.status(200).json({ receipts })

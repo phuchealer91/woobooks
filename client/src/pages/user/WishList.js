@@ -1,12 +1,12 @@
 import { DeleteOutlined } from '@ant-design/icons'
-import { Pagination } from 'antd'
+import { Pagination, Tag } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { getWishLists, removeWishLists } from '../../apis/cart'
 import { UserLayouts } from '../../components/navigation/Layouts/Layouts'
 import SectionTitle from '../../components/SectionTitle/SectionTitle'
-import { formatPrice } from '../../helpers/formatPrice'
+import { formatPrice, formatPriceSale } from '../../helpers/formatPrice'
 import { EmptyBox } from '../../helpers/icons'
 function WishList(props) {
   const [wishList, setWishList] = useState([])
@@ -67,11 +67,30 @@ function WishList(props) {
                         </span>
                       </Link>
                     </div>
-                    <div className="w-full sm:w-1/6 xl:w-1/5 text-center sm:text-right sm:pr-6 xl:pr-16 pb-4 sm:pb-0 text-gray-700">
-                      <span className="font-hk ">{formatPrice(w.price)}đ</span>
+                    <div className="w-full   text-center sm:text-right sm:pr-6 xl:pr-16 pb-4 sm:pb-0 text-gray-700">
+                      {w.sale > 0 ? (
+                        <div className="flex items-center justify-end">
+                          <div className="text-blue-600 font-semibold text-base ">
+                            {formatPriceSale(w.price, w.sale)}đ
+                          </div>
+                          <div className="text-gray-600 text-sm opacity-70 line-through mx-3">
+                            {formatPrice(w.price)} đ
+                          </div>
+                          <Tag color="orange" className="opacity-60 ">
+                            <span className="text-yellow-600 font-semibold">
+                              {' '}
+                              -{w.sale}%
+                            </span>
+                          </Tag>
+                        </div>
+                      ) : (
+                        <div className="text-blue-600 font-semibold text-base ">
+                          {formatPrice(w.price)} đ
+                        </div>
+                      )}
                     </div>
                     <button
-                      className="btn btn-primary btn-addToCart uppercase "
+                      className="btn bg-red-500 hover:bg-red-600 text-white font-semibold btn-addToCart uppercase "
                       onClick={() => onHandleremoveWishList(w._id)}
                     >
                       <DeleteOutlined />

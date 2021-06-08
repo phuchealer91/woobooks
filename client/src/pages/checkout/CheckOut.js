@@ -5,7 +5,6 @@ import {
 } from '@ant-design/icons'
 import { Modal, Tag } from 'antd'
 import React, { useEffect, useState } from 'react'
-import ModalImage from 'react-modal-image'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useHistory } from 'react-router-dom'
 import { toast } from 'react-toastify'
@@ -18,7 +17,6 @@ import {
   getUserCarts,
   removeAddress,
 } from '../../apis/cart'
-import imageDefault from '../../assets/images/default-image.jpg'
 import Loading from '../../components/Notify/Loading'
 import { formatPrice, formatPriceSale } from '../../helpers/formatPrice'
 import { addToCart } from '../../redux/actions/cart'

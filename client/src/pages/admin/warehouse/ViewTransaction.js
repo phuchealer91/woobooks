@@ -65,7 +65,7 @@ function ViewTransaction({ receipt, idx, loadUserReceipts }) {
                 </span>
                 . Thời gian:{' '}
                 <span className="font-semibold">
-                  {moment(log.createdAt).format('DD/MM/YYYY, h:mm:ss A')}
+                  {new Date(log?.createdAt).toLocaleString()}
                 </span>{' '}
               </li>
             ))}
@@ -81,7 +81,7 @@ function ViewTransaction({ receipt, idx, loadUserReceipts }) {
               <InputNumber
                 size="middle"
                 min={1}
-                defaultValue={1}
+                defaultValue={0}
                 max={receipt?.receiptTotal - receipt?.receiptPayment}
                 className="opacity-100 w-3/6"
                 value={nextPrice}

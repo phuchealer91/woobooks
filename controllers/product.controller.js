@@ -24,7 +24,7 @@ module.exports.getListAllProducts = async (req, res) => {
       .populate('supplier')
       .populate('category')
       .populate('subs')
-      .sort('createdAt')
+      .sort('-createdAt')
       .exec()
     if (!products)
       return res.status(400).json({ error: 'Products không tồn tại' })
@@ -92,7 +92,7 @@ module.exports.getListProductSale = async (req, res) => {
       .populate('supplier')
       .populate('category')
       .populate('subs')
-      .sort('createdAt')
+      .sort('-createdAt')
       .limit(perPage)
       .exec()
     const productTotal = await Product.find({ sale: { $gt: 0 } })
@@ -117,7 +117,7 @@ module.exports.getListRelated = async (req, res) => {
       .populate('category')
       .populate('subs')
       // .populate('postedBy')
-      .sort('createdAt')
+      .sort('-createdAt')
       .exec()
     return res.status(200).json({ products: related })
   } catch (error) {
@@ -166,7 +166,13 @@ module.exports.productReivews = async (req, res) => {
         product._id,
         {
           $push: {
-            reviews: { name: user.name, rating, comment, postedBy: user._id },
+            reviews: {
+              name: user.name,
+              rating,
+              comment,
+              postedBy: user._id,
+              createdAt: Date.now(),
+            },
           },
         },
         { new: true }

@@ -24,8 +24,8 @@ import MessengerCustomerChat from 'react-messenger-customer-chat'
 import { getSuggestions } from '../redux/actions/suggestions'
 import ConversationBot from '../ConversationBot'
 import axios from 'axios'
-
 const Addressx = lazy(() => import('../pages/address'))
+const Contact = lazy(() => import('../pages/contact/Contact'))
 const DashBoard = lazy(() => import('../pages/admin/DashBoard'))
 const AdminPassword = lazy(() => import('../pages/admin/AdminPassword'))
 const CreateAuthor = lazy(() => import('../pages/admin/author/CreateAuthor'))
@@ -71,6 +71,7 @@ const WareHouseList = lazy(() =>
 )
 const ForgotPassword = lazy(() => import('../pages/auth/ForgotPassword'))
 const Login = lazy(() => import('../pages/auth/Login'))
+const LoginAdmin = lazy(() => import('../pages/auth/Login/LoginAdmin'))
 const Register = lazy(() => import('../pages/auth/Register'))
 const RegisterComplete = lazy(() => import('../pages/auth/RegisterComplete'))
 const Cart = lazy(() => import('../pages/cart/Cart'))
@@ -147,14 +148,14 @@ function App() {
     }
   }, [dispatch, users.token])
   useEffect(() => {
-    // const newPeer = new Peer(undefined, {
-    //   host: '/',
-    //   port: '3001',
-    // })
     const newPeer = new Peer(undefined, {
-      path: '/',
-      secure: true,
+      host: '/',
+      port: '3001',
     })
+    // const newPeer = new Peer(undefined, {
+    //   path: '/',
+    //   secure: true,
+    // })
     dispatch({
       type: typesMess.PEER,
       payload: newPeer,
@@ -168,10 +169,13 @@ function App() {
         </div>
       }
     >
-      {users && users.userDatas?.role !== 'admin' && <HeaderUser />}
+      {users &&
+        users.userDatas?.role !== 'admin' &&
+        pathname !== '/admin/login' && <HeaderUser />}
       {users &&
         users.userDatas?.role !== 'admin' &&
         pathname !== '/' &&
+        pathname !== '/admin/login' &&
         pathname !== '/admin/dashboard' && (
           <div className="px-4 bg-white hidden md:block">
             <NavBarDropdown />
@@ -181,6 +185,11 @@ function App() {
       {call && <CallModal />}
       <Switch>
         <Route exact path={`/${PATHS.LOGIN}`} component={Login} />
+        <Route
+          exact
+          path={`/${PATHS.ADMIN}/${PATHS.LOGIN}`}
+          component={LoginAdmin}
+        />
         <Route exact path={`/${PATHS.REGISTER}`} component={Register} />
         <Route
           exact
@@ -342,6 +351,7 @@ function App() {
         <Route exact path={`/${PATHS.HOME}`} component={Home} />
         <Route exact path={`/${PATHS.SHOP}`} component={Shop} />
         <Route exact path={`/${PATHS.COMMUNITY}`} component={Community} />
+        <Route exact path="/contact" component={Contact} />
         <Route
           exact
           path={`/${PATHS.COMMUNITY}/${PATHS.PROFILE}/:id`}
@@ -358,7 +368,9 @@ function App() {
           component={Messages}
         />
       </Switch>
-      {pathname !== '/admin/dashboard' && <Footer />}
+      {pathname !== '/admin/dashboard' && pathname !== '/admin/login' && (
+        <Footer />
+      )}
       <ToastContainer
         position="top-right"
         autoClose={2000}
@@ -372,10 +384,7 @@ function App() {
       />
       <Notify />
       <SideDrawer />
-      <MessengerCustomerChat
-        pageId="102783052012250"
-        appId="1419843074891555"
-      />
+
       <ConversationBot />
     </Suspense>
   )

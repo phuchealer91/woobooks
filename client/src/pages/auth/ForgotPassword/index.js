@@ -1,8 +1,9 @@
 import { Col, Form, Row } from 'antd'
-import React from 'react'
+import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { toast } from 'react-toastify'
+import SectionTitle from '../../../components/SectionTitle/SectionTitle'
 import { auth } from '../../../firebase'
 import { useAuthUser } from '../../../hooks/useAuthUser'
 import { hideLoading, showLoading } from '../../../redux/actions/ui'
@@ -14,6 +15,7 @@ const ForgotPassword = (props) => {
   const [form] = Form.useForm()
   const history = useHistory()
   const dispatch = useDispatch()
+  const [isSent, setIsSent] = useState(false)
 
   const onFinish = async ({ email }) => {
     dispatch(showLoading())
@@ -29,29 +31,35 @@ const ForgotPassword = (props) => {
       }
       await auth.sendPasswordResetEmail(email, config)
       dispatch(hideLoading())
-
-      toast.success(
-        'Chúng tôi đã gửi yêu cầu khôi phục mật khẩu của bạn qua email. Vui lòng kiểm tra email !'
-      )
+      setIsSent(true)
+      toast.success('Gửi yêu cầu khôi phục mật khẩu thành công')
       // redirect
 
-      history.push(`${PATHS.HOME}`)
+      // history.push(`${PATHS.HOME}`)
     } catch (error) {
+      setIsSent(false)
       dispatch(hideLoading())
-      toast.error(error.message)
+      toast.error('Gửi yêu cầu khôi phục mật khẩu thất bại')
     }
   }
 
   return (
-    <div className="forgot-password">
-      <Row className="forgot-password__wrap">
-        <Col xs={24} sm={24} md={8} lg={8}>
-          <h3> Khôi phục mật khẩu</h3>
-          <Form form={form} onFinish={onFinish}>
-            <FormForgotPassword />
-          </Form>
-        </Col>
-      </Row>
+    <div className="md:mt-11 flex flex-col items-center justify-center">
+      <div className="px-8 py-4 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
+        <SectionTitle>Khôi phục mật khẩu</SectionTitle>
+        <div className="text-xs text-red-500 my-2">
+          Vui lòng điền địa chỉ Email mà bạn quên mật khẩu
+        </div>
+        <Form form={form} onFinish={onFinish}>
+          <FormForgotPassword />
+        </Form>
+        {isSent && (
+          <span className="text-xs text-green-500 my-2">
+            Hệ thống đã gửi yêu cầu khôi phục mật khẩu của bạn qua Email. Vui
+            lòng kiểm tra Email !
+          </span>
+        )}
+      </div>
     </div>
   )
 }

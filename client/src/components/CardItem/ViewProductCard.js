@@ -49,9 +49,9 @@ function ViewProductCard({ product }) {
               <div className="h-20 rounded flex items-center justify-center">
                 <div className="aspect-w-1 aspect-h-1 w-full">
                   <ModalImage
-                    small={product ? product.images[0]?.url : imageDefault}
-                    large={product ? product.images[0]?.url : imageDefault}
-                    alt={`${product ? product.images[0]?.url : imageDefault}`}
+                    small={product ? product.images[1]?.url : imageDefault}
+                    large={product ? product.images[1]?.url : imageDefault}
+                    alt={`${product ? product.images[1]?.url : imageDefault}`}
                   />
                 </div>
               </div>

@@ -8,7 +8,7 @@ import { toast } from 'react-toastify'
 import { registerOrUpdateUsers } from '../../../apis/auth'
 import { auth, googleAuthProvider } from '../../../firebase'
 import { notify } from '../../../redux/actions/notify'
-import { loginInUser } from '../../../redux/actions/users'
+import { loginInUser, logoutInUser } from '../../../redux/actions/users'
 import PATHS from '../../../redux/constants/paths'
 import FormLogin from './FormLogin'
 import './Login.scss'
@@ -25,21 +25,26 @@ const Login = (props) => {
     if (intended) {
       return
     } else {
-      if (user && user.token) {
-        history.push('/')
-      }
+      if (user && user.token) history.push('/')
     }
   }, [user, history])
-
+  function autoLogoutUser() {
+    auth.signOut()
+    localStorage.removeItem('token')
+    dispatch(logoutInUser())
+    history.push(`/${PATHS.LOGIN}`)
+  }
   const roleBasedRedirect = (res) => {
     let intended = history.location.state
     if (intended) {
       history.push(intended.from)
     } else {
-      if (res.data.role === 'admin') {
-        history.push('/admin/dashboard')
-      } else {
+      if (res.data.role === 'user') {
+        toast.success('Đăng nhập thành công !')
         history.push('/')
+      } else {
+        toast.error('Đăng nhập thất bại !')
+        autoLogoutUser()
       }
     }
   }
@@ -67,12 +72,11 @@ const Login = (props) => {
         }
       })
       // dispatch(loginInUser(data))
-      toast.success('Đăng nhập thành công !')
       // history.push(`${PATHS.HOME}`)
       // useLoginUser(result, 'Đăng nhập thành công', PATHS.HOME)
       // CheckAdmin()
     } catch (error) {
-      toast.error(error.message)
+      toast.error('Email hoặc mật khẩu không đúng.')
     }
   }
   const loginGoogle = async () => {
@@ -82,7 +86,6 @@ const Login = (props) => {
         const { user } = result
         const token = await user.getIdToken()
         window.localStorage.setItem('token', token)
-        dispatch(notify(true))
         registerOrUpdateUsers(token).then((res) => {
           if (res.data) {
             const data = {
@@ -96,22 +99,20 @@ const Login = (props) => {
               _id: res.data._id,
             }
             dispatch(loginInUser(data))
-            dispatch(notify(false))
+            roleBasedRedirect(res)
           }
-          toast.success('Đăng nhập thành công !')
-          roleBasedRedirect(res)
         })
         // history.push(`${PATHS.HOME}`)
       })
       .catch((error) => {
-        toast.error(error.message)
+        toast.error('Email hoặc mật khẩu không đúng.')
       })
   }
   return (
     <div className="min-h-screen flex flex-col items-center justify-center">
       <div className="flex flex-col bg-white shadow-md px-4 sm:px-6 md:px-8 lg:px-10 py-8 rounded-md w-full max-w-md">
         <div className="font-medium self-center text-xl sm:text-2xl uppercase text-gray-800">
-          Đăng nhập 
+          Đăng nhập
         </div>
         {/* <button className="relative mt-4 border rounded-md py-2 text-sm text-gray-800 bg-gray-100 hover:bg-gray-200">
           <span className="absolute left-0 top-0 flex items-center justify-center h-full w-10 text-blue-500">
@@ -192,6 +193,12 @@ const Login = (props) => {
               </svg>
             </span>
             <span className="ml-2">Bạn chưa đăng ký tài khoản?</span>
+          </Link>
+          <Link
+            to={`/`}
+            className="inline-flex items-center font-bold text-blue-500 hover:text-blue-700 text-xs text-center"
+          >
+            <span className="ml-2">Trang chủ</span>
           </Link>
         </div>
       </div>

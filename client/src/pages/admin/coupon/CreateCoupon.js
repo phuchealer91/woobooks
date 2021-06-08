@@ -1,5 +1,5 @@
 import { DeleteOutlined } from '@ant-design/icons'
-import { Button, Form, Table } from 'antd'
+import { Button, Form, Table, Tag } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { SearchItem } from '../../../components/LocalSearch'
@@ -45,6 +45,12 @@ const CreateCoupon = () => {
   function closeModal() {
     setShowModal(false)
   }
+  function TimeExpiry(start, end) {
+    const starts = new Date(start).getTime()
+    const ends = new Date(end).getTime()
+    const time = Math.ceil((ends - starts) / (1000 * 3600 * 24))
+    return time
+  }
   // Search
   const searched = (keyword) => (coupon) =>
     coupon.name.toLowerCase().includes(keyword)
@@ -54,7 +60,9 @@ const CreateCoupon = () => {
       Id: item._id,
       Name: item.name,
       Discount: item.discount,
+      CreatedAt: new Date(item.createdAt).toLocaleString(),
       Expiry: new Date(item.expiry).toLocaleString(),
+      Status: TimeExpiry(item.createdAt, item.expiry),
     }))
   const columns = [
     {
@@ -68,25 +76,37 @@ const CreateCoupon = () => {
       key: 'name',
     },
     {
-      title: 'Phần trăm (%)',
+      title: '%',
       dataIndex: 'Discount',
       key: 'discount',
     },
     {
-      title: 'Hạn sử dụng',
+      title: 'Bắt đầu',
+      dataIndex: 'CreatedAt',
+      key: 'createdAt',
+    },
+    {
+      title: 'Hết hạn',
       dataIndex: 'Expiry',
       key: 'expiry',
     },
-    // {
-    //   title: 'Trạng thái',
-    //   dataIndex: 'Status',
-    //   key: 'status',
-    // },
+    {
+      title: 'Trạng thái',
+      dataIndex: 'Status',
+      key: 'status',
+      render: (record) => {
+        return record > 0 ? (
+          <Tag color="green-inverse">Còn hạn</Tag>
+        ) : (
+          <Tag color="red-inverse">Hết hạn</Tag>
+        )
+      },
+    },
     {
       title: 'Thao tác',
       dataIndex: '',
       key: 'x',
-      width: '200px',
+
       render: (text, record) => (
         <>
           {/* <Button type="primary" className="mr">

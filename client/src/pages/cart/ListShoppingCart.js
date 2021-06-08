@@ -191,7 +191,7 @@ const ListShoppingCart = ({ cartLists }) => {
                       pathname: '/login',
                       state: { from: 'cart' },
                     }}
-                    className="btn btn-primary btn-addToCart uppercase mx-auto w-full"
+                    className="btn py-3 mt-2 font-semibold bg-blue-500 hover:bg-blue-600 transition text-white hover:text-white uppercase mx-auto w-full"
                   >
                     Đăng nhập
                   </Link>

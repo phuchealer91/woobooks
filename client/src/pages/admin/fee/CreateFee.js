@@ -132,7 +132,6 @@ const CreateFee = () => {
       title: 'Thao tác',
       dataIndex: '',
       key: 'x',
-      width: '200px',
       render: (text, record) => (
         <>
           <Button

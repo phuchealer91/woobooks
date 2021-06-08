@@ -174,13 +174,13 @@ const CreateReceipt = () => {
                               <div className="aspect-w-1 aspect-h-1 w-full">
                                 <ModalImage
                                   small={
-                                    item ? item.images[0]?.url : imageDefault
+                                    item ? item.images[1]?.url : imageDefault
                                   }
                                   large={
-                                    item ? item.images[0]?.url : imageDefault
+                                    item ? item.images[1]?.url : imageDefault
                                   }
                                   alt={`${
-                                    item ? item.images[0]?.url : imageDefault
+                                    item ? item.images[1]?.url : imageDefault
                                   }`}
                                 />
                               </div>
@@ -284,7 +284,7 @@ const CreateReceipt = () => {
                           size="middle"
                           min={1}
                           max={onHandleTotal()}
-                          defaultValue={1}
+                          defaultValue={0}
                           className="opacity-100 w-3/6 text-gray-600"
                           onChange={(price) => {
                             setPricePayment(price)

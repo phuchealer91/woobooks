@@ -14,6 +14,7 @@ import {
   UnorderedListOutlined,
   UsergroupAddOutlined,
   UserSwitchOutlined,
+  DollarOutlined,
 } from '@ant-design/icons'
 import { Menu } from 'antd'
 import React, { useEffect, useState } from 'react'
@@ -139,10 +140,7 @@ const AdminSideBar = () => {
         Thành viên
       </Menu.Item>
 
-      <Menu.Item
-        icon={<BarcodeOutlined />}
-        key={`/${PATHS.ADMIN}/${PATHS.FEE}`}
-      >
+      <Menu.Item icon={<DollarOutlined />} key={`/${PATHS.ADMIN}/${PATHS.FEE}`}>
         Phí vận chuyển
       </Menu.Item>
       <Menu.Item

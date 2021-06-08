@@ -19,19 +19,17 @@ const FormForgotPassword = (props) => {
           },
         ]}
         name="email"
+        style={{ marginBottom: '8px' }}
       >
-        <Input placeholder="Nhập địa chỉ email" prefix={<MailOutlined />} />
+        <Input
+          placeholder="Nhập địa chỉ email"
+          prefix={<MailOutlined />}
+          className="py-1 w-full"
+        />
       </Form.Item>
-      <Form.Item>
-        <Button
-          type="primary"
-          style={{ background: '#003a8c' }}
-          htmlType="submit"
-          className="form-submit-button"
-        >
-          Gửi yêu cầu
-        </Button>
-      </Form.Item>
+      <button className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 my-3">
+        Gửi yêu cầu
+      </button>
     </>
   )
 }

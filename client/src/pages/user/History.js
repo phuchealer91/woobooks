@@ -204,11 +204,11 @@ function History(props) {
                       <thead>
                         <tr className="bg-gray-200 text-gray-600 text-sm leading-normal">
                           <th className="py-3 px-4 text-left">Mã đơn hàng</th>
-                          <th className="py-3 px-4 text-left">
-                            Tên khách hàng
-                          </th>
                           <th className="py-3 px-4 text-left">Tổng tiền</th>
                           <th className="py-3 px-4 text-left">Thời gian</th>
+                          <th className="py-3 px-4 text-left">
+                            Phương thức thanh toán
+                          </th>
                           <th className="py-3 px-4 text-left">Trạng thái</th>
                           <th className="py-3 px-4 text-left">Thao tác</th>
                         </tr>

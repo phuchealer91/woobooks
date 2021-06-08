@@ -24,8 +24,5 @@ const orderSchema = new schema(
   { timestamps: true }
 )
 
-orderSchema.pre('save', function () {
-  console.log('query criteria', orderSchema.getQuery())
-})
 const Order = mongoose.model('Order', orderSchema)
 module.exports = Order

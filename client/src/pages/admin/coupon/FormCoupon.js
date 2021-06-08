@@ -30,7 +30,7 @@ const FormCoupon = () => {
       >
         <InputNumber
           placeholder="Nhập số (%) giảm giá "
-          className="rounded py-2 text-base w-1/2"
+          className="rounded py-1 text-base w-1/2"
         />
       </Form.Item>
       <Form.Item

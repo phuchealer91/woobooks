@@ -64,15 +64,6 @@ function TableOrderAdmin({ order, loadAllOrders }) {
               </span>
             </div>
           </td>
-          <td className="py-3 px-6 text-left">
-            <ul className="list-disc text-xs">
-              <li className="pb-1">Tên: {order?.deliveryAddress?.name}</li>
-              <li className="pb-1">
-                ĐC: {order?.deliveryAddress?.mainAddress}
-              </li>
-              <li className="pb-1">SĐT: {order?.deliveryAddress?.phone}</li>
-            </ul>
-          </td>
           <td className="py-3 px-6 text-center">
             <div className="">
               {formatPriceReal(order?.paymentIntent?.amount)}đ
@@ -82,6 +73,11 @@ function TableOrderAdmin({ order, loadAllOrders }) {
             <span className="">
               {new Date(order?.paymentIntent?.created * 1000).toLocaleString()}
             </span>
+          </td>
+          <td className="py-3 px-6 text-left">
+            {order?.paymentIntent?.payment_method_types[0] === 'card'
+              ? 'Thanh toán online qua STRIPE'
+              : 'Thanh toán khi giao hàng'}
           </td>
           <td className="py-3 px-6 text-center">
             {order?.orderStatus === 'Đang chờ xác nhận' ? (

@@ -38,7 +38,7 @@ export default function NotificationsDropDown(props) {
           <List.Item
             className={notify.hasRead ? '' : 'unread'}
             extra={notify.hasRead ? '' : <div className="unread-dot"></div>}
-            onClick={() => props.markAsReadHandler(index, url)}
+            // onClick={() => props.markAsReadHandler(index, url)}
           >
             <List.Item.Meta
               avatar={

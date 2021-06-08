@@ -20,7 +20,7 @@ const HeaderAdmin = () => {
     auth.signOut()
     localStorage.removeItem(TOKEN)
     dispatch(logoutInUser())
-    history.push(`/${PATHS.LOGIN}`)
+    history.push(`/${PATHS.ADMIN}/${PATHS.LOGIN}`)
   }
 
   return (

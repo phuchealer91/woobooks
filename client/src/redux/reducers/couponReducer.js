@@ -12,7 +12,7 @@ const couponReducer = (state = initialState, action) => {
     case types.ADD_COUPON:
       return { ...state }
     case types.ADD_COUPON_SUCCESS:
-      toast.success('Add coupon success')
+      toast.success('Thêm mã giảm giá thành công')
       return {
         ...state,
         couponList: [action.payload.data.coupon, ...state.couponList],
@@ -20,7 +20,7 @@ const couponReducer = (state = initialState, action) => {
     case types.GET_COUPON_SUCCESS:
       return { ...state, couponList: action.payload.data.coupon }
     case types.DELETE_COUPON_SUCCESS:
-      toast.success('Delete coupon success ')
+      toast.success('Xóa mã thành công ')
       return {
         ...state,
         couponList: state.couponList.filter(

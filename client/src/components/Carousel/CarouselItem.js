@@ -1,13 +1,6 @@
 import { LeftOutlined, RightOutlined } from '@ant-design/icons'
 import { Carousel } from 'antd'
 import React from 'react'
-import banner1 from '../../assets/images/banner1.png'
-import banner2 from '../../assets/images/banner2.png'
-import banner3 from '../../assets/images/banner3.png'
-import banner4 from '../../assets/images/banner4.jpg'
-import banner5 from '../../assets/images/banner5.png'
-import banner6 from '../../assets/images/banner6.png'
-import banner7 from '../../assets/images/banner7.png'
 
 function CarouselItem(props) {
   function SampleNextArrow(props) {

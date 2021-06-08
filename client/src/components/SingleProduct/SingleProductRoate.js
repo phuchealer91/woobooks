@@ -1,7 +1,7 @@
 import { HeartOutlined, ShoppingOutlined } from '@ant-design/icons'
-import { Form, Input, Rate, Tabs, Tooltip } from 'antd'
+import { Form, Input, Rate, Tabs, Tag, Tooltip } from 'antd'
 import _ from 'lodash'
-import React, { useEffect, useRef } from 'react'
+import React, { useState } from 'react'
 import 'react-image-lightbox/style.css'
 import { useDispatch } from 'react-redux'
 import { Link, useRouteMatch } from 'react-router-dom'
@@ -9,23 +9,24 @@ import { toast } from 'react-toastify'
 import * as THREE from 'three'
 import oc from 'three-orbit-controls'
 import { addWishLists } from '../../apis/cart'
-import { formatPrice } from '../../helpers/formatPrice'
+import { formatPrice, formatPriceSale } from '../../helpers/formatPrice'
 import { addToCart } from '../../redux/actions/cart'
 import { showDrawer } from '../../redux/actions/ui'
 import { ImagePreviewList } from '../Community/ImagePreview/ImagePreview'
 import ModalRating from '../ModalConfirm/ModalRating'
 import ShowRatings from '../Ratings/ShowRatings'
-
+import Image3D from './Image3D'
 const OrbitControls = oc(THREE)
 
 const { TabPane } = Tabs
 function SingleProductRoate({ productEditing }) {
   const dispatch = useDispatch()
-  const section = useRef()
+
+  const [now, setNow] = useState(Date.now())
   const { slug } = useRouteMatch().params
   const {
     title,
-
+    supplier,
     quantity,
     images,
     description,
@@ -33,6 +34,7 @@ function SingleProductRoate({ productEditing }) {
     publisher,
     author,
     price,
+    sale,
   } = productEditing
 
   const myMesh = React.useRef()
@@ -70,66 +72,6 @@ function SingleProductRoate({ productEditing }) {
       })
   }
 
-  useEffect(() => {
-    var scene = new THREE.Scene()
-    var camera = new THREE.PerspectiveCamera(75, 420 / 400, 0.1, 1000)
-
-    var renderer = new THREE.WebGLRenderer({ alpha: true })
-    renderer.setSize(420, 400)
-    section.current.appendChild(renderer.domElement)
-    const controls = new OrbitControls(camera, renderer.domElement)
-    renderer.setClearColor(0xf2f2f2)
-    // camera.position.set(0, 20, 100)
-    controls.autoRotate = true
-    controls.update()
-    var geometry = new THREE.BoxGeometry(3.5, 5, 0.5)
-
-    const light = new THREE.DirectionalLight(0xffffff)
-    const ambient = new THREE.AmbientLight(0xffffff)
-    light.position.set(0, 0, 6)
-    scene.add(light)
-    scene.add(ambient)
-
-    camera.position.z = 5
-    const loader = new THREE.TextureLoader()
-    // const urls = [
-    //   'https://res.cloudinary.com/ecommerce-mp/image/upload/v1621673518/wkt6vka3tqijadqkuntd.jpg',
-    //   'https://res.cloudinary.com/ecommerce-mp/image/upload/v1621673519/c1uckbdftljwyxhdy9lw.jpg',
-    //   'https://res.cloudinary.com/ecommerce-mp/image/upload/v1621673518/cenbivni42pgp0hugrzo.jpg',
-    //   'https://res.cloudinary.com/ecommerce-mp/image/upload/v1621673518/t6xeprhxbz9mhljeilpr.jpg',
-    //   'https://res.cloudinary.com/ecommerce-mp/image/upload/v1621673519/uvufcwicytuglkkys2sr.jpg',
-    //   'https://res.cloudinary.com/ecommerce-mp/image/upload/v1621673519/rj6hwym8tzvf2qlvyg89.jpg',
-    // ]
-    const urls = [
-      'https://res.cloudinary.com/ecommerce-mp/image/upload/v1621673518/wkt6vka3tqijadqkuntd.jpg',
-      images[0]?.url ||
-        'https://res.cloudinary.com/ecommerce-mp/image/upload/v1621673519/c1uckbdftljwyxhdy9lw.jpg',
-      'https://res.cloudinary.com/ecommerce-mp/image/upload/v1621673518/cenbivni42pgp0hugrzo.jpg',
-      'https://res.cloudinary.com/ecommerce-mp/image/upload/v1621673518/t6xeprhxbz9mhljeilpr.jpg',
-      images[1]?.url ||
-        'https://res.cloudinary.com/ecommerce-mp/image/upload/v1621673519/uvufcwicytuglkkys2sr.jpg',
-      images[2]?.url ||
-        'https://res.cloudinary.com/ecommerce-mp/image/upload/v1621673519/rj6hwym8tzvf2qlvyg89.jpg',
-    ]
-    const materials = urls.map((url) => {
-      return new THREE.MeshLambertMaterial({
-        map: loader.load(url),
-      })
-    })
-    var cube = new THREE.Mesh(geometry, materials)
-    scene.add(cube)
-
-    var animate = function () {
-      requestAnimationFrame(animate)
-      controls.update()
-      // cube.rotation.x += 0.01
-      // cube.rotation.y += 0.01
-
-      renderer.render(scene, camera)
-    }
-    animate()
-  }, [])
-
   return (
     <>
       <div className="py-4 bg-white block md:flex">
@@ -141,18 +83,14 @@ function SingleProductRoate({ productEditing }) {
                 <ImagePreviewList data={images} />
               </div>
             </div>
-            <div
-              className="border-none border-gray-200 p-0 pt-0 full-img md:p-2 md:border"
-              style={{ width: 'calc(100% - 112px)', height: '400px' }}
-            >
-              <div ref={section}></div>
-              {/* <Canvas>
+
+            <Image3D images={images} />
+            {/* <Canvas>
                 <Suspense fallback={null}>
                   <div ref={section}></div>
                   <OrbitControls autoRotate />
                 </Suspense>
               </Canvas> */}
-            </div>
           </div>
         </div>
         <div className=" w-full px-4 md:w-7/12 pt-3 md:pt-0">
@@ -160,9 +98,7 @@ function SingleProductRoate({ productEditing }) {
           <div className="hidden pb-1 md:block">
             <div className="inline-block w-3/5 pr-4 whitespace-nowrap overflow-hidden overflow-ellipsis">
               <span>Nhà cung cấp: </span>
-              <Link to="/" className="no-underline">
-                NHã nam
-              </Link>
+              {supplier.name}
             </div>
             <div className="inline-block w-2/5 pl-4 whitespace-nowrap overflow-hidden overflow-ellipsis">
               <span>Tác giả: </span>
@@ -204,9 +140,26 @@ function SingleProductRoate({ productEditing }) {
             )}
           </div>
           <div className="pb-2 flex items-center justify-between">
-            <div className="text-blue-600 font-semibold text-3xl">
-              {formatPrice(price)} đ
-            </div>
+            {sale > 0 ? (
+              <div className="flex items-center">
+                <div className="text-blue-600 font-semibold text-3xl ">
+                  {formatPriceSale(price, sale)}đ
+                </div>
+                <div className="text-gray-600 text-lg opacity-70 line-through mx-3">
+                  {formatPrice(price)} đ
+                </div>
+                <Tag color="orange" className="opacity-60 ">
+                  <span className="text-yellow-600 font-semibold">
+                    {' '}
+                    -{sale}%
+                  </span>
+                </Tag>
+              </div>
+            ) : (
+              <div className="text-blue-600 font-semibold text-3xl ">
+                {formatPrice(price)} đ
+              </div>
+            )}
             <div className="text-blue-600 font-semibold ">
               <Tooltip placement="left" title="Yêu thích">
                 <button

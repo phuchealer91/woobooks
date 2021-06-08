@@ -73,7 +73,6 @@ const CreateCategory = () => {
       title: 'Thao tác',
       dataIndex: '',
       key: 'x',
-      width: '200px',
       render: (text, record) => (
         <>
           <Button type="primary" className="rounded mr-1 mb-1">

@@ -1,9 +1,9 @@
-import { Divider, Rate, Tabs } from 'antd'
+import { Rate, Tabs } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useRouteMatch } from 'react-router-dom'
 import { getProduct } from '../../apis/product'
-import { CardItem } from '../../components/CardItem'
+import CardItemLQ from '../../components/CardItem/CardItemLQ'
 import LoadingCard from '../../components/LoadingCard'
 import SingleProductRoate from '../../components/SingleProduct/SingleProductRoate'
 import { EmptyBox } from '../../helpers/icons'
@@ -45,7 +45,7 @@ function Product(props) {
             <SingleProductRoate productEditing={productEditing} />
           )}
         </div>
-        <section className="my-5 bg-white border border-gray-200 border-solid overflow-hidden rounded-t-lg">
+        {/* <section className="my-5 bg-white border border-gray-200 border-solid overflow-hidden rounded-t-lg">
           <div className="flex items-center bg-blue-300 h-12 rounded-t-lg">
             <div className="flex items-center">
               <img
@@ -82,7 +82,7 @@ function Product(props) {
               </div>
             )}
           </div>
-        </section>
+        </section> */}
         <div className="rounded rounded-b-none rounded-l-none ">
           <div className="px-4 py-4 bg-white">
             <Tabs type="card">
@@ -122,6 +122,12 @@ function Product(props) {
                         <th className="text-gray-600 w-1/4 py-2">NXB</th>
                         <td className="text-gray-600 w-3/4">
                           {productEditing?.publisher}{' '}
+                        </td>
+                      </tr>
+                      <tr className="my-3">
+                        <th className="text-gray-600 w-1/4 py-2">Ngôn ngữ</th>
+                        <td className="text-gray-600 w-3/4">
+                          {productEditing?.lang}{' '}
                         </td>
                       </tr>
                       <tr className="my-3">
@@ -167,7 +173,6 @@ function Product(props) {
                 animated
               >
                 <div className="px-4 py-4">
-                  <Divider dashed />
                   {productEditing && productEditing?.reviews.length > 0 ? (
                     productEditing.reviews.map((rating, idx) => {
                       return (
@@ -181,9 +186,7 @@ function Product(props) {
                                 {rating.name}
                               </h3>
                               <p className="text-gray-500 text-xs">
-                                {new Date(
-                                  productEditing?.updatedAt
-                                ).toLocaleString()}
+                                {new Date(rating?.createdAt).toLocaleString()}
                               </p>
                             </div>
                           </div>
@@ -221,14 +224,19 @@ function Product(props) {
             ) : (
               <div className="container">
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 auto-rows-auto grid-flow-row gap-12 mt-6">
-                  {productRelated &&
+                  {productRelated.length > 0 ? (
                     productRelated.map((product) => {
                       return (
                         <div className="product-item" key={product._id}>
-                          <CardItem product={product} />
+                          <CardItemLQ product={product} />
                         </div>
                       )
-                    })}
+                    })
+                  ) : (
+                    <div className="flex items-center justify-center">
+                      <EmptyBox />
+                    </div>
+                  )}
                 </div>
               </div>
             )}

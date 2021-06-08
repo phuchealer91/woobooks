@@ -115,7 +115,7 @@ function ViewOrder({ order, idx, loaduserOrder }) {
           </span>
           <div className="text-sm text-gray-500 pt-3 ">
             {order?.paymentIntent?.payment_method_types[0] === 'card'
-              ? 'Thanh toán online qua stripe'
+              ? 'Thanh toán online qua STRIPE'
               : 'Thanh toán khi giao hàng'}
           </div>
         </div>

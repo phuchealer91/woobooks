@@ -66,6 +66,7 @@ const handleCurrentWeek = (req, res) => {
       {
         $match: {
           createdAt: { $gte: new Date(weekStart), $lte: new Date(weekEnd) },
+          orderStatus: 'Đã bàn giao',
         },
       },
       {
@@ -96,6 +97,7 @@ const handleMonthAgo = (req, res) => {
             $gte: new Date(monthStart),
             $lte: new Date(monthEnd),
           },
+          orderStatus: 'Đã bàn giao',
         },
       },
       {
@@ -126,6 +128,7 @@ const handleCurrentMonth = (req, res) => {
           createdAt: {
             $gte: new Date(monthStart),
           },
+          orderStatus: 'Đã bàn giao',
         },
       },
       {
@@ -154,6 +157,7 @@ const handleYear365 = (req, res) => {
           createdAt: {
             $gte: new Date(day365),
           },
+          orderStatus: 'Đã bàn giao',
         },
       },
       {
@@ -183,6 +187,7 @@ const handleDay7Ago = (req, res) => {
           createdAt: {
             $gte: new Date(day7),
           },
+          orderStatus: 'Đã bàn giao',
         },
       },
       {

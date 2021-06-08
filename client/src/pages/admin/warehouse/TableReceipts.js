@@ -70,7 +70,7 @@ function TableReceipts({ receipt, idx, loadUserReceipts }) {
           </td>
           <td className="py-3 px-6 text-left">
             <div className="flex items-center">
-              <span>{receipt?.supplier?.name.substring(0, 20)}</span>
+              <span>{receipt?.supplier?.name}</span>
             </div>
           </td>
           <td className="py-3 px-6 text-center">
@@ -82,9 +82,9 @@ function TableReceipts({ receipt, idx, loadUserReceipts }) {
             {/* {formatPrice(order?.paymentIntent?.amount)}đ */}
             <span>
               {receipt.statusReceipt === true ? (
-                <Tag color="green">Đã duyệt</Tag>
+                <Tag color="green-inverse">Đã duyệt</Tag>
               ) : (
-                <Tag color="red">Chưa duyệt</Tag>
+                <Tag color="orange-inverse">Chưa duyệt</Tag>
               )}
             </span>
           </td>

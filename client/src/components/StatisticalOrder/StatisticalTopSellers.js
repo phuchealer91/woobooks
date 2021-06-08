@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { getTopSellers } from '../../apis/order'
-import { formatPrice } from '../../helpers/formatPrice'
+import { formatPrice, formatPriceSale } from '../../helpers/formatPrice'
 StatisticalTopSellers.propTypes = {}
 
 function StatisticalTopSellers(props) {
@@ -47,25 +47,39 @@ function StatisticalTopSellers(props) {
                               <td className="py-3 px-6 text-left">
                                 <span className="font-semibold">
                                   {' '}
-                                  {order?.title}
+                                  {order?.title.substring(0, 30)}
                                 </span>
                               </td>
                               <td className="py-3 px-6 text-center">
                                 <img
-                                  src={order.images[0]?.url}
+                                  src={order.images[1]?.url}
                                   style={{
                                     objectFit: 'cover',
                                     width: '100px',
                                     height: '100px',
                                   }}
-                                  alt=""
+                                  alt="image"
                                 />
                               </td>
                               <td className="py-3 px-6 text-center">
                                 <span>{order?.sold}</span>
                               </td>
                               <td className="py-3 px-6 text-center">
-                                <span>{formatPrice(order?.price)} đ</span>
+                                {order.sale > 0 ? (
+                                  <>
+                                    <div className="text-blue-600 text-base font-semibold">
+                                      {formatPriceSale(order.price, order.sale)}
+                                      đ
+                                    </div>
+                                    <div className="mt-1 text-gray-400 text-sm line-through">
+                                      {formatPrice(order.price)}đ
+                                    </div>{' '}
+                                  </>
+                                ) : (
+                                  <div className="text-blue-600 text-base font-semibold">
+                                    {formatPrice(order.price)}đ
+                                  </div>
+                                )}
                               </td>
                             </tr>
                           </tbody>

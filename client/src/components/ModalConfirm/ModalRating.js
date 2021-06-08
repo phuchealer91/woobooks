@@ -31,7 +31,7 @@ function ModalRating({ children, productId }) {
   function onHandleSubmit() {
     form.submit()
     setIsOpen(false)
-    toast.success('Thanks for your review. It will apper soon')
+    toast.success('Cảm ơn bạn đã để lại đánh giá. Nó sẽ xuất hiện sớm !')
   }
   return (
     <>

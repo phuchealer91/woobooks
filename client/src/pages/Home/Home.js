@@ -97,15 +97,22 @@ function Home(props) {
                   Cộng đồng
                 </Link>
               </li>
-              {/* <li className="px-4 py-2 hover:bg-blue-200 cursor-pointer transition">
+              <li className="px-4 py-2 hover:bg-blue-200 cursor-pointer transition">
                 <Link
-                  to="/community"
+                  to="/contact"
                   className="text-base color-secondar transition-all  inline-block text-gray-600 hover:text-gray-600"
                 >
-                  Hỗ trợ
+                  Liên hệ
                 </Link>
-              </li> */}
+              </li>
             </ul>
+            <div style={{ paddingTop: '62%' }}>
+              <img
+                src="https://cdn0.fahasa.com/media/wysiwyg/Thang-06-2021/TrangBigSale1_T621_bo3__310x210.jpg"
+                alt="abs"
+                style={{ objectFit: 'cover', width: '100%', height: 'auto' }}
+              />
+            </div>
           </div>
           <div className="w-full md:w-9/12">
             <CarouselItem />

@@ -5,8 +5,8 @@ const DB_URL = process.env.DB_URL
 const express = require('express')
 const cors = require('cors')
 const SocketServer = require('./socketServer')
-// const { PeerServer } = require('peer')
-const { ExpressPeerServer } = require('peer')
+const { PeerServer } = require('peer')
+// const { ExpressPeerServer } = require('peer')
 const path = require('path')
 // const cookieParser = require('cookie-parser')
 const app = express()
@@ -26,7 +26,7 @@ connectDB(DB_URL).then((res) => {
   io.on('connection', (socket) => {
     SocketServer(socket)
   })
-  ExpressPeerServer(http, { path: '/' })
+  // ExpressPeerServer(http, { path: '/' })
 })
 app.use(morgan('dev'))
 // SocketIO (Option)
@@ -43,7 +43,7 @@ app.use(morgan('dev'))
 //   SocketServer(socket)
 // })
 // Peer
-// PeerServer({ port: 3001, path: '/' })
+PeerServer({ port: 3001, path: '/' })
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'))
   app.get('*', (req, res) => {

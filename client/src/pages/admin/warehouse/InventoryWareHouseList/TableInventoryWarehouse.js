@@ -1,6 +1,6 @@
 import { Tag } from 'antd'
 import React from 'react'
-import { formatPrice } from '../../../../helpers/formatPrice'
+import { formatPrice, formatPriceSale } from '../../../../helpers/formatPrice'
 TableInventoryWarehouse.propTypes = {}
 
 function TableInventoryWarehouse({ product }) {
@@ -31,8 +31,8 @@ function TableInventoryWarehouse({ product }) {
           <td className="py-3 px-6 text-left">
             <div className="flex items-center">
               <img
-                src={product?.images[0]?.url}
-                alt={product?.images[0]?.url}
+                src={product?.images[1]?.url}
+                alt={product?.images[1]?.url}
                 loading="lazy"
                 style={{
                   objectFit: 'cover',
@@ -60,8 +60,21 @@ function TableInventoryWarehouse({ product }) {
             </div>
           </td>
           <td className="py-3 px-6 text-left">
-            <div className="flex items-center">
-              <span> {formatPrice(product?.price)}đ</span>
+            <div className="flex flex-col">
+              {product?.sale > 0 ? (
+                <>
+                  <div className="text-blue-600 text-base font-semibold">
+                    {formatPriceSale(product?.price, product?.sale)}đ
+                  </div>
+                  <div className="mt-1 text-gray-400 text-sm line-through">
+                    {formatPrice(product?.price)}đ
+                  </div>{' '}
+                </>
+              ) : (
+                <div className="text-blue-600 text-base font-semibold">
+                  {formatPrice(product?.price)}đ
+                </div>
+              )}
             </div>
           </td>
         </tr>

@@ -1,5 +1,5 @@
 import { DeleteOutlined } from '@ant-design/icons'
-import { Modal, Pagination } from 'antd'
+import { Modal } from 'antd'
 import { Formik } from 'formik'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'

@@ -249,6 +249,21 @@ const handleCategory = async (req, res, category) => {
     console.log(err)
   }
 }
+const handleAuthor = async (req, res, author) => {
+  try {
+    let products = await Product.find({ author })
+      .populate('category', '_id name')
+      .populate('author', '_id name')
+      .populate('supplier', '_id name')
+      .populate('subs', '_id name')
+      .populate('postedBy', '_id name')
+      .exec()
+
+    return res.status(200).json({ products })
+  } catch (err) {
+    console.log(err)
+  }
+}
 const handleStar = (req, res, stars) => {
   Product.aggregate([
     {
@@ -311,7 +326,7 @@ const handleLayout = async (req, res, layout) => {
 }
 module.exports.productSearchFilters = async (req, res) => {
   try {
-    const { query, price, category, stars, subs, layout } = req.body
+    const { query, price, category, stars, subs, layout, author } = req.body
     // text
     if (query) {
       await handleQuery(req, res, query.trim())
@@ -323,6 +338,10 @@ module.exports.productSearchFilters = async (req, res) => {
     // category
     if (category) {
       await handleCategory(req, res, category)
+    }
+    // category
+    if (author) {
+      await handleAuthor(req, res, author)
     }
     // stars
     if (stars) {

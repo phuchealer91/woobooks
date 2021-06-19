@@ -1,6 +1,5 @@
 import { CheckCircleOutlined } from '@ant-design/icons'
 import { InputNumber } from 'antd'
-import moment from 'moment'
 import React, { useState } from 'react'
 import { userReceiptTransactions } from '../../../apis/cart'
 import { formatPrice } from '../../../helpers/formatPrice'

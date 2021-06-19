@@ -1,6 +1,5 @@
 import { Steps, Tag } from 'antd'
 import React, { useState } from 'react'
-import ModalImage from 'react-modal-image'
 import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { updatedOrderCancelStatus } from '../../apis/order'

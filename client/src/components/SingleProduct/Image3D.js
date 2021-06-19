@@ -1,9 +1,7 @@
 import React, { useEffect, useRef } from 'react'
-import PropTypes from 'prop-types'
 import oc from 'three-orbit-controls'
 import * as THREE from 'three'
 const OrbitControls = oc(THREE)
-Image3D.propTypes = {}
 
 function Image3D({ images }) {
   const section = useRef()

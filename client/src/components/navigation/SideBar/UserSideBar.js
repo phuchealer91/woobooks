@@ -1,6 +1,5 @@
 import {
   AppstoreOutlined,
-  DashboardOutlined,
   EnvironmentOutlined,
   HeartOutlined,
   SafetyCertificateOutlined,

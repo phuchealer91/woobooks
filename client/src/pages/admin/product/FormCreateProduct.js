@@ -1,6 +1,4 @@
-import { TagOutlined } from '@ant-design/icons'
-import { DatePicker, Form, Input, Select } from 'antd'
-import Button from 'antd/lib/button'
+import { Select } from 'antd'
 import React from 'react'
 const { Option } = Select
 
@@ -31,13 +29,11 @@ const FormCreateProduct = ({
     subs,
     sale,
     quantity,
-    totalQuantity,
     pages,
     author,
     supplier,
     publisher,
     publication,
-    images,
     layouts,
     languages,
     layout,

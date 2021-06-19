@@ -1,6 +1,5 @@
 import { CheckCircleOutlined } from '@ant-design/icons'
 import React from 'react'
-import ModalImage from 'react-modal-image'
 import { Link } from 'react-router-dom'
 import { userReceiptAccepts } from '../../../apis/cart'
 import imageDefault from '../../../assets/images/default-image.jpg'

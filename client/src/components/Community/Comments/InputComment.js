@@ -1,9 +1,6 @@
 import React, { useState } from 'react'
-import PropTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
 import { createComments } from '../../../redux/actions/comment'
-
-InputComment.propTypes = {}
 
 function InputComment({ children, post }) {
   const [contentComment, setContentComment] = useState('')

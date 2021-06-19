@@ -7,7 +7,6 @@ import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { registerOrUpdateUsers } from '../../../apis/auth'
 import { auth, googleAuthProvider } from '../../../firebase'
-import { notify } from '../../../redux/actions/notify'
 import { loginInUser, logoutInUser } from '../../../redux/actions/users'
 import PATHS from '../../../redux/constants/paths'
 import FormLogin from './FormLogin'
@@ -26,16 +25,16 @@ const Login = (props) => {
     dispatch(logoutInUser())
     history.push(`/${PATHS.ADMIN}/${PATHS.LOGIN}`)
   }
-  // useEffect(() => {
-  //   let intended = history.location.state
-  //   if (intended) {
-  //     return
-  //   } else {
-  //     if (user && user.token) {
-  //       history.push('/admin/dashboard')
-  //     }
-  //   }
-  // }, [user, history])
+  useEffect(() => {
+    let intended = history.location.state
+    if (intended) {
+      return
+    } else {
+      if (user && user.token) {
+        history.push('/')
+      }
+    }
+  }, [user, history])
 
   const roleBasedRedirect = (res) => {
     let intended = history.location.state

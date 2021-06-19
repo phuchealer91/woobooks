@@ -1,4 +1,4 @@
-import { Col, Form, Row } from 'antd'
+import { Form } from 'antd'
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
@@ -7,7 +7,6 @@ import SectionTitle from '../../../components/SectionTitle/SectionTitle'
 import { auth } from '../../../firebase'
 import { useAuthUser } from '../../../hooks/useAuthUser'
 import { hideLoading, showLoading } from '../../../redux/actions/ui'
-import PATHS from '../../../redux/constants/paths'
 import './ForgotPassword.scss'
 import FormForgotPassword from './FormForgotPassword'
 const ForgotPassword = (props) => {

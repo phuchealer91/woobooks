@@ -1,8 +1,7 @@
-import { DeleteOutlined, EditOutlined } from '@ant-design/icons'
+import { DeleteOutlined } from '@ant-design/icons'
 import { Button, Form, Select, Table } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { createFees, deleteFees, getFees } from '../../../apis/fee'
 import { getProvinces } from '../../../apis/province'
@@ -10,10 +9,6 @@ import { SearchItem } from '../../../components/LocalSearch'
 import { ModalConfirm } from '../../../components/ModalConfirm'
 import { Layouts } from '../../../components/navigation/Layouts/Layouts'
 import SectionTitle from '../../../components/SectionTitle/SectionTitle'
-import {
-  createSubCategory,
-  deleteSubCategories,
-} from '../../../redux/actions/subCategory'
 import FormFee from './FormFee'
 
 const { Option } = Select

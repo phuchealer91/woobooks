@@ -32,7 +32,7 @@ function TableInventoryWarehouse({ product }) {
             <div className="flex items-center">
               <img
                 src={product?.images[1]?.url}
-                alt={product?.images[1]?.url}
+                alt="books"
                 loading="lazy"
                 style={{
                   objectFit: 'cover',

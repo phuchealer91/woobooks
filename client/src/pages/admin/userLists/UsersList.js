@@ -1,11 +1,9 @@
 import { Pagination } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { getAllUsers } from '../../../apis/cart'
-import { getUsers } from '../../../apis/order'
 import { Layouts } from '../../../components/navigation/Layouts/Layouts'
 import Loading from '../../../components/Notify/Loading'
 import SectionTitle from '../../../components/SectionTitle/SectionTitle'
-import TableOrderAdmin from '../../../components/ViewOrder/TableOrderAdmin'
 import TableUsersList from './TableUsersList'
 function UsersList(props) {
   const [users, setUsers] = useState([])

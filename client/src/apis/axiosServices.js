@@ -1,6 +1,5 @@
 import axios from 'axios'
 import { auth } from '../firebase'
-import { TOKEN } from '../redux/constants/keys'
 const baseURL = 'http://localhost:8000/api'
 
 const getFirebaseToken = async () => {

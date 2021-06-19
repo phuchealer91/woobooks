@@ -22,15 +22,14 @@ const Register = (props) => {
   useEffect(() => {
     if (user && user.token) history.push('/')
   }, [user, history])
+
   const roleBasedRedirect = (res) => {
-    // check if intended
     let intended = history.location.state
     if (intended) {
       history.push(intended.from)
     } else {
-      if (res.data.role === 'admin') {
-        history.push('/admin/dashboard')
-      } else {
+      if (res.data.role === 'user') {
+        toast.success('Đăng nhập thành công !')
         history.push('/')
       }
     }
@@ -56,7 +55,6 @@ const Register = (props) => {
         const { user } = result
         const token = await user.getIdToken()
         window.localStorage.setItem('token', token)
-        dispatch(notify(true))
         registerOrUpdateUsers(token).then((res) => {
           if (res.data) {
             const data = {
@@ -70,10 +68,8 @@ const Register = (props) => {
               _id: res.data._id,
             }
             dispatch(loginInUser(data))
-            dispatch(notify(false))
+            roleBasedRedirect(res)
           }
-          toast.success('Đăng nhập thành công !')
-          roleBasedRedirect(res)
         })
         // history.push(`${PATHS.HOME}`)
       })

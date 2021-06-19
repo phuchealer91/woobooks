@@ -20,7 +20,7 @@ import PATHS from '../../../redux/constants/paths'
 import { Searchs } from '../../LocalSearch'
 import NavBar from '../NavBar/NavBar'
 
-const { SubMenu, Item } = Menu
+const { Item } = Menu
 const HeaderUser = () => {
   const [current, setCurrent] = useState('home')
   const history = useHistory()

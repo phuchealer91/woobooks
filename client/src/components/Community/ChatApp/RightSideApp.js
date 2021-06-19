@@ -69,7 +69,7 @@ function RightSideApp(props) {
     files.forEach((file) => {
       if (!file) return (errors = 'Không tìm thấy tệp hình ảnh hoặc video.')
       if (file.size > 1024 * 1024 * 8) {
-        return (errors = 'Tệp hình ảnh hoặc video không được lớn hơn 5MB.')
+        return (errors = 'Tệp hình ảnh hoặc video không được lớn hơn 8MB.')
       }
       return newMedia.push(file)
     })

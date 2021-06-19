@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getCategories } from '../../apis/category'
 import { fetchProductsSearch, getListAllProducts } from '../../apis/product'
 import { getSubCategories } from '../../apis/subCategory'
+import { getAuthors } from '../../apis/author'
 import { CardItem } from '../../components/CardItem'
 import NavBar from '../../components/navigation/NavBar/NavBar'
 import Star from '../../components/Star'
@@ -26,7 +27,9 @@ function Shop(props) {
   const [ok, setOk] = useState(false)
   const [productsAll, setProductsAll] = useState([])
   const [categories, setCategories] = useState([])
+  const [authors, setAuthors] = useState([])
   const [categoryIds, setCategoryIds] = useState([])
+  const [authorIds, setAuthorIds] = useState([])
   const [star, setStar] = useState('')
   const [subs, setSubs] = useState([])
   const [sub, setSub] = useState('')
@@ -48,6 +51,7 @@ function Shop(props) {
   }, [text])
   useEffect(() => {
     loadCategory()
+    loadAuthor()
     loadSubCategory()
   }, [])
   function loadAllProducts() {
@@ -60,6 +64,13 @@ function Shop(props) {
     getCategories().then((res) => {
       if (res.data) {
         setCategories(res.data.categories)
+      }
+    })
+  }
+  function loadAuthor() {
+    getAuthors().then((res) => {
+      if (res.data) {
+        setAuthors(res.data.authors)
       }
     })
   }
@@ -105,6 +116,21 @@ function Shop(props) {
         <br />
       </div>
     ))
+  const showAuthors = () =>
+    authors.map((c) => (
+      <div key={c._id}>
+        <Checkbox
+          onChange={handleCheckAuthor}
+          className="pb-2 pl-4 pr-4"
+          value={c._id}
+          name="author"
+          checked={authorIds.includes(c._id)}
+        >
+          {c.name}
+        </Checkbox>
+        <br />
+      </div>
+    ))
 
   const showSubs = () =>
     subs.map((tag) => (
@@ -118,6 +144,29 @@ function Shop(props) {
       </CheckableTag>
     ))
 
+  function handleCheckAuthor(e) {
+    dispatch(searchQuery(''))
+    setPrice([0, 0])
+    setStar('')
+    setSub('')
+    setSelectedTags([])
+    setLayout('')
+    let initState = [...authorIds]
+    let authorSeleted = e.target.value
+    let foundauthorId = initState.indexOf(authorSeleted)
+
+    if (foundauthorId === -1) {
+      initState.push(authorSeleted)
+    } else {
+      initState.splice(foundauthorId, 1)
+    }
+    setAuthorIds(initState)
+    if (initState === undefined || initState.length === 0) {
+      loadAllProducts()
+    } else {
+      loadProductsFilter({ author: initState })
+    }
+  }
   function handleCheck(e) {
     dispatch(searchQuery(''))
     setPrice([0, 0])
@@ -263,7 +312,7 @@ function Shop(props) {
             range
             value={price}
             onChange={handleSlider}
-            max="500000"
+            max="1000000"
           />
         </div>
       </SubMenu>
@@ -295,7 +344,7 @@ function Shop(props) {
         key="4"
         title={
           <span className="h6">
-            <DownSquareOutlined /> Danh mục con
+            <DownSquareOutlined /> Loại sách
           </span>
         }
       >
@@ -318,6 +367,17 @@ function Shop(props) {
         <div style={{ maringTop: '-10px' }} className="pr-5">
           {showLayouts()}
         </div>
+      </SubMenu>
+      {/* author */}
+      <SubMenu
+        key="6"
+        title={
+          <span className="h6 flex items-center">
+            <DownSquareOutlined /> <span>Tác giả</span>
+          </span>
+        }
+      >
+        <div style={{ maringTop: '-10px' }}>{showAuthors()}</div>
       </SubMenu>
     </Menu>
   )

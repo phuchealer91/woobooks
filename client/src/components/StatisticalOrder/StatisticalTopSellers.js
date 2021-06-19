@@ -58,7 +58,7 @@ function StatisticalTopSellers(props) {
                                     width: '100px',
                                     height: '100px',
                                   }}
-                                  alt="image"
+                                  alt="books"
                                 />
                               </td>
                               <td className="py-3 px-6 text-center">

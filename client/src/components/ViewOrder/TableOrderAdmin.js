@@ -1,5 +1,5 @@
-import { DeleteFilled, DeleteOutlined, EyeOutlined } from '@ant-design/icons'
-import { Button, Tag } from 'antd'
+import { DeleteFilled, EyeOutlined } from '@ant-design/icons'
+import { Tag } from 'antd'
 import Modal from 'antd/lib/modal/Modal'
 import React, { useState } from 'react'
 import { toast } from 'react-toastify'

@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react'
-import { List, Avatar, Skeleton } from 'antd'
+import { Avatar, List, Skeleton } from 'antd'
 import moment from 'moment'
 import 'moment/locale/vi'
+import React, { useEffect } from 'react'
 
 moment.locale('vi')
 

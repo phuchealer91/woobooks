@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { RightOutlined } from '@ant-design/icons'
 import {
@@ -10,7 +9,6 @@ import {
 } from '../../components/SubCategory'
 import '../../assets/styles/styles.scss'
 import { useSelector } from 'react-redux'
-NavBarDropdown.propTypes = {}
 
 function NavBarDropdown(props) {
   const { user } = useSelector((state) => state)

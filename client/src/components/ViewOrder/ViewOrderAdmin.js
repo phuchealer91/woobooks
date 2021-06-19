@@ -1,6 +1,5 @@
 import { Select, Steps } from 'antd'
 import React from 'react'
-import ModalImage from 'react-modal-image'
 import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { updatedOrderCancelStatus, updatedOrderStatus } from '../../apis/order'

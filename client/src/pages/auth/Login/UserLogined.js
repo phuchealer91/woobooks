@@ -2,7 +2,6 @@ import { BellOutlined } from '@ant-design/icons'
 import { Avatar, Badge, Button, notification } from 'antd'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
 import OpenSocket from 'socket.io-client'
 import { getNotifications } from '../../../apis/auth'
 import { notificationCount } from '../../../redux/actions/users'
@@ -69,7 +68,7 @@ const UserLogined = (props) => {
   useEffect(() => {
     const socket = OpenSocket('http://localhost:8000')
     socket.on('create order', (orderUser) => {
-      openNotification('create order', orderUser)
+      // openNotification('create order', orderUser)
       dispatch(
         notificationCount({
           count: notificationsCount + 1,
@@ -106,19 +105,19 @@ const UserLogined = (props) => {
     setVisibleNoti((pre) => !pre)
   }
 
-  const markAsReadHandler = (index, url) => {
-    props.history.push(url)
+  // const markAsReadHandler = (index, url) => {
+  //   props.history.push(url)
 
-    if (notifications[index].hasRead) return
+  //   if (notifications[index].hasRead) return
 
-    let notifyId
-    setNotifications((notifications) => {
-      const newNotifications = [...notifications]
-      newNotifications[index].hasRead = true
-      notifyId = newNotifications[index]._id
-      return newNotifications
-    })
-  }
+  //   let notifyId
+  //   setNotifications((notifications) => {
+  //     const newNotifications = [...notifications]
+  //     newNotifications[index].hasRead = true
+  //     notifyId = newNotifications[index]._id
+  //     return newNotifications
+  //   })
+  // }
 
   return (
     <div className="user-group desktop-screen">
@@ -137,7 +136,6 @@ const UserLogined = (props) => {
             loading={loadingNotifications}
             notifications={notifications}
             setVisibleNoti={setVisibleNoti}
-            // markAsReadHandler={markAsReadHandler}
             className="notifications-dropdown"
             header={
               <span className="px-4 font-semibold">Thông báo đơn hàng</span>

@@ -6,7 +6,7 @@
 REACT_APP_STRIPE_KEY=pk_test_51HrpPwFdX4LUv0XVNHEgVujg6IQWQu3GNpY4zn164NXUjX1Kxlg0eiTAIpmmRi1pRvjUeYUQLKSXoyhwa04JbQfy00wtkKDC7d 
  ```
 - BIẾN REACT AUTH
- * -- Chỉnh url nếu cần
+  * Chỉnh url nếu cần
  ```
 REACT_APP_REGISTER_REDIRECT_URL="http://localhost:3000/register/complete"
 REACT_APP_FORGOT_PASSWORD_REDIRECT_URL="http://localhost:3000/login"

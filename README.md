@@ -1,5 +1,5 @@
 ## Setup Project
-1. Client
+1. **Client**
 - STRIPE
   * Chỉnh sửa biến trong file .env 
  ```
@@ -11,7 +11,7 @@ REACT_APP_STRIPE_KEY=pk_test_51HrpPwFdX4LUv0XVNHEgVujg6IQWQu3GNpY4zn164NXUjX1Kxl
 REACT_APP_REGISTER_REDIRECT_URL="http://localhost:3000/register/complete"
 REACT_APP_FORGOT_PASSWORD_REDIRECT_URL="http://localhost:3000/login"
  ```
-2. Server
+2. **Server**
 - CLOUDINARY (Thư viện upload ảnh)
    * Vô file .env
    * Đăng ký account để upload image lên bên thứ 3 [Cloudinary](https://cloudinary.com/users/login)
@@ -48,3 +48,10 @@ formData.append('upload_preset', 'wppoal56')
    * File config lấy từ firebase: chatbot-mbooks-eb346328ebaa.json 
  
 ## Run Project
+- Server 
+   * yarn or npm i
+   * yarn server or npm run server
+- Client
+   * cd /client
+   * yarn or npm i
+   * yarn start or npm run start
